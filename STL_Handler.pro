@@ -1,4 +1,9 @@
 QT += widgets
 
 SOURCES += \
-    main.cpp
+    main.cpp \
+    stlfileobject.cpp
+
+HEADERS += \
+    stlfileobject.h \
+    datatypes.h
