@@ -1,4 +1,4 @@
-#include "stlfileobject.h"
+﻿#include "stlfileobject.h"
 #include "datatypes.h"
 
 #include <QApplication>
@@ -9,13 +9,13 @@
 
 StlFileObject::StlFileObject(){}
 
-int StlFileObject::decodeFile(QString stl_data_brut){
+std::vector<triangle> StlFileObject::decodeFile(QString stl_data_brut){
     QString word;
     std::string text = stl_data_brut.toStdString();
     int state = 0; //the state machine for decoding
     std::vector<triangle> triangles;
     triangle tmp;
-    int cpt = 1;
+    int cpt = 0;
     for(unsigned int i = 0; i < text.length(); i++)
     {
         word.push_back(text[i]);
@@ -46,48 +46,53 @@ int StlFileObject::decodeFile(QString stl_data_brut){
                 tmp.p1.z = word.toDouble();
                 state++;
             case 6:
-                state++; //vertex
+                state++; //nothing
                 break;
             case 7:
-                tmp.p2.x = word.toDouble();
                 state++;
                 break;
             case 8:
-                tmp.p2.y = word.toDouble();
-                state++;
+                state++; //vertex
                 break;
             case 9:
-                tmp.p2.z = word.toDouble();
+                tmp.p2.x = word.toDouble();
                 state++;
                 break;
             case 10:
-                state++; //vertex
+                tmp.p2.y = word.toDouble();
+                state++;
                 break;
             case 11:
-                tmp.p3.x = word.toDouble();
+                tmp.p2.z = word.toDouble();
                 state++;
                 break;
             case 12:
+                state++; //nothing
+                break;
+            case 13:
+                state++; //vertex
+                break;
+            case 14:
+                tmp.p3.x = word.toDouble();
+                state++;
+                break;
+            case 15:
                 tmp.p3.y = word.toDouble();
                 state++;
                 break;
-            case 13:
+            case 16:
                 tmp.p3.z = word.toDouble();
-                state++;
-                std::cout << cpt << std::endl;
-                std::cout << "P1: " << tmp.p1.x << " " << tmp.p1.y << " " << tmp.p1.z << std::endl;
-                std::cout << "P2: " << tmp.p2.x << " " << tmp.p2.y << " " << tmp.p2.z << std::endl;
-                std::cout << "P3: " << tmp.p3.x << " " << tmp.p3.y << " " << tmp.p3.z << std::endl << std::endl;
                 state = 0;
+                tmp.id = cpt;
+                triangles.push_back(tmp);
                 cpt++;
                 break;
             default:
                 break;
             }
-            triangles.push_back(tmp);
             word.clear();
         }
     }
-    std::cout << "Nb of coordinates: " << cpt-1 << std::endl;
-    return 1;
+    std::cout << "Nb of triangles: " << cpt << std::endl;
+    return triangles;
 }
