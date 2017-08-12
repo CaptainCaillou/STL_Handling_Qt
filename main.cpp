@@ -26,16 +26,16 @@ StlFileObject StlFileObj;
     QPushButton buttonTest("test", &fenetre);
     buttonTest.move(500,50);
     QLabel TxtBlock(&fenetre);
-    QString stl_data_brut;
+    QString stl_raw_data_data;
 
     if (!input.open(QIODevice::ReadOnly))
         std::cerr << "Can't open file" << std::endl;
     if (input.isOpen())
     {
         std::cout << "file open" << std::endl;
-        stl_data_brut = input.readAll();
-        std::cout << StlFileObj.decodeFile(stl_data_brut);
-        TxtBlock.setText(stl_data_brut);
+        stl_raw_data_data = input.readAll();
+        std::cout << StlFileObj.decodeFile(stl_raw_data_data);
+        TxtBlock.setText(stl_raw_data_data);
         input.close();
     }
     fenetre.show();

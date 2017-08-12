@@ -29,7 +29,7 @@ int StlFileObject::decodeFile(QString stl_data_brut){
                 }
                 break;
             case 1:
-                state++; //rien
+                state++; //nothing
                 break;
             case 2:
                 state++;
@@ -88,6 +88,6 @@ int StlFileObject::decodeFile(QString stl_data_brut){
             word.clear();
         }
     }
-    std::cout << "Nb of coordinates: " << triangles.size() << std::endl;
+    std::cout << "Nb of coordinates: " << cpt-1 << std::endl;
     return 1;
 }
