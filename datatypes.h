@@ -1,17 +1,23 @@
 #ifndef DATATYPES_H
 #define DATATYPES_H
 
-#endif // DATATYPES_H
-
 struct point{
     double x;
     double y;
     double z;
 };
 
-struct triangle{
-    int id;
-    point p1;
-    point p2;
-    point p3;
+struct vect3d{
+    point origin;
+    double cx;
+    double cy;
+    double cz;
 };
+
+struct reference{
+    vect3d ux;
+    vect3d uy;
+    vect3d uz;
+};
+
+#endif // DATATYPES_H
