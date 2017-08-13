@@ -111,12 +111,7 @@ segment layer::getCrossingSegment(triangle tri){
 }
 
 std::vector<segment> layer::getContour(std::vector<triangle> triangles){
-
-    std::vector<triangle>::iterator tri;
-    for (tri = triangles.begin(); tri < triangles.end(); tri++)
-    {
-        contours.push_back(getCrossingSegment(*(tri.base())));
-    }
+    for_each (triangles.begin(), triangles.end(), getCrossingSegment(triangles));
     std::vector<segment> test;
     return test;
 }

@@ -5,11 +5,13 @@ SOURCES += \
     stlfileobject.cpp \
     triangle.cpp \
     layer.cpp \
-    segment.cpp
+    segment.cpp \
+    printer.cpp
 
 HEADERS += \
     stlfileobject.h \
     datatypes.h \
     triangle.h \
     layer.h \
-    segment.h
+    segment.h \
+    printer.h
