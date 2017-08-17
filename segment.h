@@ -11,7 +11,7 @@ public:
     segment();
     point p1;
     point p2;
-
+    bool isEmpty;
     friend std::ostream& operator<<(std::ostream& os, const segment& seg);
 };
 #endif // SEGMENT_H

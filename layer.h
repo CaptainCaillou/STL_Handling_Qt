@@ -11,12 +11,12 @@ class layer
 {
 public:
     layer();
-    float width;
-    float height;
+    float   width;
+    float   height;
     std::vector<segment> contours;
 
     segment getCrossingSegment(triangle);
-    std::vector<segment> getContour(std::vector<triangle> triangles);
+    void getContour(std::vector<triangle> triangles);
 
 };
 

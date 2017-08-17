@@ -2,6 +2,7 @@
 
 segment::segment()
 {
+    isEmpty = true;
     p1.x = 0;
     p1.y = 0;
     p1.z = 0;

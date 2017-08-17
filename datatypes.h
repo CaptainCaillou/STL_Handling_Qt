@@ -14,10 +14,4 @@ struct vect3d{
     double cz;
 };
 
-struct reference{
-    vect3d ux;
-    vect3d uy;
-    vect3d uz;
-};
-
 #endif // DATATYPES_H

@@ -3,9 +3,8 @@
 
 #include "layer.h"
 
-layer::layer()
-{
-
+layer::layer() {
+    height = 0;
 }
 
 segment layer::getCrossingSegment(triangle tri){
@@ -22,101 +21,102 @@ segment layer::getCrossingSegment(triangle tri){
         */
         return s;
     }
+    s.isEmpty = false;
     s.p1.z = (height + width) / 2;
     s.p2.z = s.p1.z;
     double a;
 
     //if the plan is between P1 and P2
-    if((tri.p1.z > s.p1.z && tri.p2.z < s.p1.z) || (tri.p1.z < s.p1.z && tri.p2.z > s.p1.z))
-    {
-        if(tri.p1.x == tri.p2.x)
+    if((tri.p1.z > s.p1.z && tri.p2.z < s.p1.z) || (tri.p1.z < s.p1.z && tri.p2.z > s.p1.z)) {
+        if(tri.p1.x == tri.p2.x) {
             s.p1.x = tri.p1.x;
-        else {
-        a = (tri.p1.z - tri.p2.z) / (tri.p1.x - tri.p2.x);
-        s.p1.x = a / s.p1.z;
-        }
-        if(tri.p1.y == tri.p2.y)
+        } else {
+            a = (tri.p1.z - tri.p2.z) / (tri.p1.x - tri.p2.x);
+            s.p1.x = a / s.p1.z;
+        } if(tri.p1.y == tri.p2.y)
             s.p1.y = tri.p1.y;
-        else
-        {
-        a = (tri.p1.z - tri.p2.z) / (tri.p1.y - tri.p2.y);
-        s.p1.y = a / s.p1.z;
+        else {
+            a = (tri.p1.z - tri.p2.z) / (tri.p1.y - tri.p2.y);
+            s.p1.y = a / s.p1.z;
         }
         //if the plan in between P2 and P3
-        if((tri.p2.z > s.p1.z && tri.p3.z < s.p1.z) || (tri.p2.z < s.p1.z && tri.p3.z > s.p1.z))
-        {
+        if((tri.p2.z > s.p1.z && tri.p3.z < s.p1.z) || (tri.p2.z < s.p1.z && tri.p3.z > s.p1.z)) {
             if(tri.p2.x == tri.p3.x)
                 s.p2.x = tri.p2.x;
-            else
-            {
+            else {
                 a = (tri.p2.z - tri.p3.z) / (tri.p2.x - tri.p3.x);
                 s.p2.x = a / s.p1.z;
-            }
-            if(tri.p2.y == tri.p3.y)
+            } if(tri.p2.y == tri.p3.y)
                 s.p2.y = tri.p1.y;
-            else
-            {
+            else {
                 a = (tri.p2.z - tri.p3.z) / (tri.p2.y - tri.p3.y);
                 s.p2.y = a / s.p1.z;
             }
         } else
-        //if the plan in between P1 and P3
-        if((tri.p1.z > s.p1.z && tri.p3.z < s.p1.z) || (tri.p1.z < s.p1.z && tri.p3.z > s.p1.z))
-        {
-            if(tri.p1.x == tri.p3.x)
-                s.p2.x = tri.p1.x;
-            else
+            //if the plan in between P1 and P3
+            if((tri.p1.z > s.p1.z && tri.p3.z < s.p1.z) || (tri.p1.z < s.p1.z && tri.p3.z > s.p1.z))
             {
-                a = (tri.p1.z - tri.p3.z) / (tri.p1.x - tri.p3.x);
-                s.p2.x = a / s.p1.z;
+                if(tri.p1.x == tri.p3.x)
+                    s.p2.x = tri.p1.x;
+                else {
+                    a = (tri.p1.z - tri.p3.z) / (tri.p1.x - tri.p3.x);
+                    s.p2.x = a / s.p1.z;
+                }
+                if(tri.p1.y == tri.p3.y)
+                    s.p2.y = tri.p1.y;
+                else {
+                    a = (tri.p1.z - tri.p3.z) / (tri.p1.y - tri.p3.y);
+                    s.p2.y = a / s.p1.z;
+                }
             }
-            if(tri.p1.y == tri.p3.y)
-                s.p2.y = tri.p1.y;
-            else
-            {
-            a = (tri.p1.z - tri.p3.z) / (tri.p1.y - tri.p3.y);
-            s.p2.y = a / s.p1.z;
-            }
-        }
     } else {
         //the plan is between P1 and P3 + P2 and P3
         if(tri.p2.x == tri.p3.x)
             s.p1.x = tri.p2.x;
         else
         {
-        a = (tri.p2.z - tri.p3.z) / (tri.p2.x - tri.p3.x);
-        s.p1.x = a / s.p1.z;
+            a = (tri.p2.z - tri.p3.z) / (tri.p2.x - tri.p3.x);
+            s.p1.x = a / s.p1.z;
         }
         if(tri.p2.y == tri.p3.y)
             s.p1.y = tri.p2.y;
         else
         {
-        a = (tri.p2.z - tri.p3.z) / (tri.p2.y - tri.p3.y);
-        s.p1.y = a / s.p1.z;
+            a = (tri.p2.z - tri.p3.z) / (tri.p2.y - tri.p3.y);
+            s.p1.y = a / s.p1.z;
         }
         if(tri.p1.x == tri.p3.x)
             s.p2.x = tri.p1.x;
         else {
-        a = (tri.p1.z - tri.p3.z) / (tri.p1.x - tri.p3.x);
-        s.p2.x = a / s.p1.z;
+            a = (tri.p1.z - tri.p3.z) / (tri.p1.x - tri.p3.x);
+            s.p2.x = a / s.p1.z;
         }
         if(tri.p1.y == tri.p3.y)
             s.p2.y = tri.p3.y;
         else {
-        a = (tri.p1.z - tri.p3.z) / (tri.p1.y - tri.p3.y);
-        s.p2.y = a / s.p1.z;
+            a = (tri.p1.z - tri.p3.z) / (tri.p1.y - tri.p3.y);
+            s.p2.y = a / s.p1.z;
         }
     }
+    //std::cout << "Get crossing segment    " << s << std::endl;
     return s;
 }
 
-std::vector<segment> layer::getContour(std::vector<triangle> triangles){
+void layer::getContour(std::vector<triangle> triangles){
+    std::cout << "layer::getContour" << std::endl;
 
-    std::vector<triangle>::iterator tri;
-    for (tri = triangles.begin(); tri < triangles.end(); tri++)
-    {
-        contours.push_back(getCrossingSegment(*(tri.base())));
+    for (unsigned int i = 0 ; i < triangles.size() ; i++) {
+        segment seg = getCrossingSegment(triangles[i]);
+        if(!seg.isEmpty)
+        {
+        contours.push_back(seg);
+        std::cout << "x "  << seg.p1.x;
+        std::cout << " y " << seg.p1.y;
+        std::cout << " z " << seg.p1.z  << std::endl;
+        std::cout << "x "  << seg.p2.x;
+        std::cout << " y " << seg.p2.y;
+        std::cout << " z " << seg.p2.z  << std::endl;
+        }
     }
-    std::vector<segment> test;
-    return test;
+    std::cout << contours.size() << std::endl;
 }

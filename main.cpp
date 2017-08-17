@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     std::vector<triangle> triangles;
     StlFileObject StlFileObj;
-    QFile input("../STL_Handler/test.stl");
     QString stl_raw_data_data;
 
     printer fenetre;
 
+    QFile input("../STL_Handler/test.stl");
     if (!input.open(QIODevice::ReadOnly))
         std::cerr << "Can't open file" << std::endl;
     if (input.isOpen())
@@ -46,27 +46,19 @@ int main(int argc, char *argv[])
         std::cout << "file open" << std::endl;
         stl_raw_data_data = input.readAll();
         triangles =  StlFileObj.decodeFile(stl_raw_data_data);
-
         input.close();
-        layer test;
-        test.height = 0.00;
-        test.width = 0.2;
+        layer lay;
+
+        lay.width =  0.2;
         int cpt = 0;
 
-        test.getContour(triangles);
-
-        for(test.height = 0; test.height < 3; test.height += test.width) {
-            for(unsigned int i = 0 ; i < triangles.size(); i++) {
-                if(test.getCrossingSegment(triangles[i]).p1.z) {
-                    cpt++;
-                }
-            }
-            std::cout << "from " << test.height <<" to " << test.height + test.width << ", " << cpt<< "segments" << std::endl;
-            cpt = 0;
-
-            fenetre.printLayerContour(test.contours);
+        for(lay.height = 0; lay.height < 10; lay.height += fenetre.part[0].width) {
+            lay.contours.clear();
+            lay.getContour(triangles);
+            fenetre.part.push_back(lay);
+            std::cout << fenetre.part.data()->contours.size() << std::endl;
         }
+        fenetre.show();
     }
-    fenetre.show();
    return app.exec();
 }
