@@ -18,8 +18,9 @@ printer::printer() : QWidget() {
 
 void printer::openDialog() {
     if(currentLayer < part.size())
-    currentLayer++;
+        currentLayer++;
     std::cout << "Current layer: " << currentLayer << std::endl;
+    this->repaint();
 }
 
 void printer::paintEvent(QPaintEvent*) {
