@@ -11,23 +11,18 @@ segment layer::getCrossingSegment(triangle tri){
     segment s;
     //If the triangle is too high or to low in the Z direction
     if((tri.getMaxZ().z < height) || (tri.getMinZ().z > (height + width)))
-    {
-        /* DEBUG PART
-        std::cout << "(getMaxZ().z < lay.height)" << (getMaxZ().z < lay.height) << std::endl;
-        std::cout << "(getMinZ().z > (lay.height + lay.width))" << (getMinZ().z > (lay.height + lay.width)) << std::endl;
-
-        std::cout << "min       \tlayHeight \tHeight + Width \tmax" << std::endl;
-        std::cout << getMinZ().z << "\t" << lay.height << "\t\t" << lay.height+ lay.width << "\t\t" << getMaxZ().z << std::endl;
-        */
         return s;
-    }
+
+    //If we are here, we have a segment to found
     s.isEmpty = false;
+
+    // We put our Z level between the top and the bottom reference
     s.p1.z = (height + width) / 2;
     s.p2.z = s.p1.z;
     double a;
 
-    //if the plan is between P1 and P2
-    if((tri.p1.z > s.p1.z && tri.p2.z < s.p1.z) || (tri.p1.z < s.p1.z && tri.p2.z > s.p1.z)) {
+    //We are now searching for a crossing between [p1,p2] and our z plan
+    if(((tri.p1.z > s.p1.z) && (tri.p2.z < s.p1.z)) || ((tri.p1.z < s.p1.z) && (tri.p2.z > s.p1.z))) {
         if(tri.p1.x == tri.p2.x) {
             s.p1.x = tri.p1.x;
         } else {
@@ -98,7 +93,6 @@ segment layer::getCrossingSegment(triangle tri){
             s.p2.y = a / s.p1.z;
         }
     }
-    //std::cout << "Get crossing segment    " << s << std::endl;
     return s;
 }
 
