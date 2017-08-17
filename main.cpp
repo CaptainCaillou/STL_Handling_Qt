@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     StlFileObject StlFileObj;
     QString stl_raw_data_data;
 
-    printer fenetre;
+    printer window;
 
     QFile input("../STL_Handler/test.stl");
     if (!input.open(QIODevice::ReadOnly))
@@ -47,18 +47,18 @@ int main(int argc, char *argv[])
         stl_raw_data_data = input.readAll();
         triangles =  StlFileObj.decodeFile(stl_raw_data_data);
         input.close();
-        layer lay;
 
+        layer lay;
         lay.width =  0.2;
         int cpt = 0;
 
-        for(lay.height = 0; lay.height < 10; lay.height += fenetre.part[0].width) {
+        for(lay.height = 0; lay.height < 10; lay.height += window.part[0].width) {
             lay.contours.clear();
             lay.getContour(triangles);
-            fenetre.part.push_back(lay);
-            std::cout << fenetre.part.data()->contours.size() << std::endl;
+            window.part.push_back(lay);
+            std::cout << window.part.data()->contours.size() << std::endl;
         }
-        fenetre.show();
+        window.show();
     }
    return app.exec();
 }

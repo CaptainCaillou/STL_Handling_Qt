@@ -29,17 +29,15 @@ void printer::paintEvent(QPaintEvent*) {
         painter.drawLine(QPoint(part[currentLayer].contours[j].p1.x*40 + 300,part[currentLayer].contours[j].p1.y*40 + 300),
                          QPoint(part[currentLayer].contours[j].p2.x*40 + 300,part[currentLayer].contours[j].p2.y*40 + 300));
 
-        std::cout << "part[" << currentLayer << "][" << j  << "].p1.x,part[";
-        std::cout <<            currentLayer << "][" << j  << "].p1.y : [";
-        std::cout << part[currentLayer].contours[j].p1.x;
-        std::cout << ",";
-        std::cout << part[currentLayer].contours[j].p1.y;
+        std::cout <<        "part[" << currentLayer << "][" << j;
+        std::cout << "].p1.x,part[" << currentLayer << "][" << j;
+        std::cout << "].p1.y :   [" << part[currentLayer].contours[j].p1.x;
+        std::cout << ","            << part[currentLayer].contours[j].p1.y;
         std::cout << "] " << std::endl;
         std::cout <<        "part[" << currentLayer << "][" << j;
         std::cout << "].p2.x,part[" << currentLayer << "][" << j;
         std::cout << "].p2.y :   [" << part[currentLayer].contours[j].p2.x;
         std::cout << ","            << part[currentLayer].contours[j].p2.y;
         std::cout << "] " << std::endl;
-
     }
 }

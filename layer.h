@@ -17,7 +17,6 @@ public:
 
     segment getCrossingSegment(triangle);
     void getContour(std::vector<triangle> triangles);
-
 };
 
 #endif // LAYER_H

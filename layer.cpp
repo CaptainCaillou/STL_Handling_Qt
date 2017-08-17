@@ -104,7 +104,6 @@ segment layer::getCrossingSegment(triangle tri){
 
 void layer::getContour(std::vector<triangle> triangles){
     std::cout << "layer::getContour" << std::endl;
-
     for (unsigned int i = 0 ; i < triangles.size() ; i++) {
         segment seg = getCrossingSegment(triangles[i]);
         if(!seg.isEmpty)
