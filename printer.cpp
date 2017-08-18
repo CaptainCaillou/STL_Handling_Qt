@@ -10,15 +10,36 @@
 printer::printer() : QWidget() {
     setGeometry(QRect(100, 100, 1000, 900));
     currentLayer = 0;
-    m_boutonDialogue = new QPushButton("Next Layer", this);
-    m_boutonDialogue->move(40, 50);
+    m_boutonInc = new QPushButton("Next Layer", this);
+    m_boutonDec = new QPushButton("Previous Layer", this);
+    m_boutonFL  = new QPushButton("First Layer", this);
+
+    m_boutonInc->move(40, 40);
+    m_boutonDec->move(40, 70);
+    m_boutonFL ->move(40, 100);
     part.clear();
-    QObject::connect(m_boutonDialogue, SIGNAL(clicked()), this, SLOT(openDialog()));
+    QObject::connect(m_boutonInc, SIGNAL(clicked()), this, SLOT(incrementLayer()));
+    QObject::connect(m_boutonDec, SIGNAL(clicked()), this, SLOT(decrementLayer()));
+    QObject::connect(m_boutonFL , SIGNAL(clicked()), this, SLOT(firstLayer()));
+
 }
 
-void printer::openDialog() {
+void printer::incrementLayer() {
     if(currentLayer < part.size()-1)
         currentLayer++;
+    std::cout << "Current layer: " << currentLayer << std::endl;
+    this->clearMask();
+    this->repaint();
+}
+void printer::decrementLayer() {
+    if(currentLayer > 0)
+        currentLayer--;
+    std::cout << "Current layer: " << currentLayer << std::endl;
+    this->clearMask();
+    this->repaint();
+}
+void printer::firstLayer() {
+    currentLayer = 0;
     std::cout << "Current layer: " << currentLayer << std::endl;
     this->clearMask();
     this->repaint();
