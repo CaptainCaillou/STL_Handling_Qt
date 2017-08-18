@@ -5,6 +5,7 @@ struct point{
     double x;
     double y;
     double z;
+    int where; //for debugging, we are searching where the point has been modified
 };
 
 struct vect3d{

@@ -15,6 +15,8 @@ public:
     float   height;
     std::vector<segment> contours;
 
+    double getCrossingPointX(point p1, point p2, double yi);
+    double getCrossingPointY(point p1, point p2, double yi);
     segment getCrossingSegment(triangle);
     void getContour(std::vector<triangle> triangles);
 };
