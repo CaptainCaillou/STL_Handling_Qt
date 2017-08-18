@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
     printer window;
 
     //QFile input("../STL_Handler/TestFiles/cube10.stl");
+    //QFile input("../STL_Handler/TestFiles/test.stl");
   //  QFile input("../STL_Handling_Qt/TestFiles/cubehole.stl");
     //QFile input("../STL_Handler/TestFiles/sphere.stl");
-    //QFile input("../STL_Handler/TestFiles/test.stl");
 
         StlFileObject StlFileObj;
         triangles =  StlFileObj.decodeFile("../STL_Handling_Qt/TestFiles/cubehole.stl");

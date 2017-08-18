@@ -50,7 +50,7 @@ void printer::paintEvent(QPaintEvent*) {
     for(unsigned int j = 0; j < part[currentLayer].contours.size(); j++) {
         painter.drawLine(QPoint(part[currentLayer].contours[j].p1.x * 30 + 300,part[currentLayer].contours[j].p1.y * 30 + 300),
                          QPoint(part[currentLayer].contours[j].p2.x * 30 + 300,part[currentLayer].contours[j].p2.y * 30 + 300));
-        /*
+
         std::cout <<        "part[" << currentLayer << "][" << j;
         std::cout << "].p1.x,part[" << currentLayer << "][" << j;
         std::cout << "].p1.y :   [" << part[currentLayer].contours[j].p1.x;
@@ -61,6 +61,6 @@ void printer::paintEvent(QPaintEvent*) {
         std::cout << "].p2.y :   [" << part[currentLayer].contours[j].p2.x;
         std::cout << ","            << part[currentLayer].contours[j].p2.y;
         std::cout << "] \t where: " << part[currentLayer].contours[j].p2.where << std::endl;
-        */
+
     }
 }

@@ -11,7 +11,7 @@ double layer::getCrossingPointX(point p1, point p2, double yi) {
     if(p1.x == p2.x) {
         return p1.x;
     } else if(p1.z == p2.z){
-        return p1.x;
+        std::cerr << "Error: Try to find an intercection between to non crossing parts" << std::endl;
     } else {
         return p1.x + (yi - p1.z) / (p2.z - p1.z) * (p2.x - p1.x);
     }
@@ -21,7 +21,7 @@ double layer::getCrossingPointY(point p1, point p2, double yi) {
     if(p1.y == p2.y) {
         return p1.y;
     } else if(p1.z == p2.z){
-        return p1.y;
+        std::cerr << "Error: Try to find an intercection between to non crossing parts" << std::endl;
     } else {
         return p1.y + (yi - p1.z) / (p2.z - p1.z) * (p2.y - p1.y);
     }
@@ -40,12 +40,40 @@ segment layer::getCrossingSegment(triangle tri){
     s.p1.z = height;//(height + width) / 2;
     s.p2.z = s.p1.z;
 
+    //now we check if one of the point is exacly on the layer
+    if(tri.p1.z == s.p1.z) {
+        s.p1 = tri.p1;
+        s.p1.where = 5;
+        if(tri.p2.z == s.p2.z) {
+            s.p2 = tri.p2;
+            s.p2.where = 6;
+            return s;
+        }
+        if(tri.p3.z == s.p1.z) {
+            s.p2 = tri.p3;
+            s.p2.where = 7;
+            return s;
+        }
+    } else if(tri.p2.z == s.p1.z) {
+        s.p1 = tri.p2;
+        s.p1.where = 8;
+        if(tri.p3.z == s.p1.z) {
+            s.p2 = tri.p3;
+            s.p2.where = 9;
+            return s;
+        }
+    }/* else if(tri.p3.z == s.p1.z) {
+        s.p1 = tri. p3;
+        s.p1.where = 10;
+    }*/
 
     //We are now searching for a crossing between [p1,p2] and our z plan
     bool p1_upper_p2_lower = ((tri.p1.z > s.p1.z) && (tri.p2.z < s.p1.z));
     bool p2_upper_p1_lower = ((tri.p2.z > s.p1.z) && (tri.p1.z < s.p1.z));
-    if(p1_upper_p2_lower || p2_upper_p1_lower) {
+    if((p1_upper_p2_lower || p2_upper_p1_lower)) {
         s.p1.where = 1;
+        if(tri.p1.z == tri.p2.z)
+            return {};
         s.p1.x = getCrossingPointX(tri.p1,tri.p2,s.p1.z);
         s.p1.y = getCrossingPointY(tri.p1,tri.p2,s.p1.z);
         //if the plan in between P2 and P3
@@ -53,6 +81,8 @@ segment layer::getCrossingSegment(triangle tri){
         bool p3_upper_p2_lower = ((tri.p3.z > s.p1.z) && (tri.p2.z < s.p1.z));
         if(p2_upper_p3_lower || p3_upper_p2_lower) {
             s.p2.where = 2;
+            if(tri.p3.z == tri.p2.z)
+                return {};
             s.p2.x = getCrossingPointX(tri.p2,tri.p3,s.p1.z);
             s.p2.y = getCrossingPointY(tri.p2,tri.p3,s.p1.z);
         } else {
@@ -61,45 +91,32 @@ segment layer::getCrossingSegment(triangle tri){
             bool p3_upper_p1_lower = ((tri.p3.z > s.p1.z) && (tri.p1.z < s.p1.z));
             if(p1_upper_p3_lower || p3_upper_p1_lower) {
                 s.p2.where = 3;
+                if(tri.p1.z == tri.p3.z)
+                    return {};
                 s.p2.x = getCrossingPointX(tri.p1,tri.p3,s.p1.z);
                 s.p2.y = getCrossingPointY(tri.p1,tri.p3,s.p1.z);
             }
         }
     } else {
         //the plan is between P1 and P3 + P2 and P3
-        s.p1.x = getCrossingPointX(tri.p2,tri.p3,s.p1.z);
-        s.p1.y = getCrossingPointY(tri.p2,tri.p3,s.p1.z);
-
-        s.p2.x = getCrossingPointX(tri.p1,tri.p3,s.p1.z);
-        s.p2.y = getCrossingPointY(tri.p1,tri.p3,s.p1.z);
-        s.p1.where = 4;
-        s.p2.where = 4;
-    }
-
-    //now we check if one of the point is exacly on the layer
-    if(tri.p1.z == s.p1.z) {
-        s.p1 = tri.p1;
-        s.p1.where = 5;
-        if(tri.p2.z == s.p2.z) {
-            s.p2 = tri.p2;
-            s.p2.where = 6;
+        bool p2_upper_p3_lower = ((tri.p2.z > s.p1.z) && (tri.p3.z < s.p1.z));
+        bool p3_upper_p2_lower = ((tri.p3.z > s.p1.z) && (tri.p2.z < s.p1.z));
+        if(p2_upper_p3_lower || p3_upper_p2_lower) {
+            if(tri.p2.z == tri.p3.z)
+                return {};
+            s.p1.x = getCrossingPointX(tri.p3,tri.p2,s.p1.z);
+            s.p1.y = getCrossingPointY(tri.p3,tri.p2,s.p1.z);
+            s.p1.where = 4;
         }
-        if(tri.p3.z == s.p1.z)
-        {
-            s.p2 = tri.p3;
-            s.p2.where = 7;
+        bool p1_upper_p3_lower = ((tri.p1.z > s.p1.z) && (tri.p3.z < s.p1.z));
+        bool p3_upper_p1_lower = ((tri.p3.z > s.p1.z) && (tri.p1.z < s.p1.z));
+        if(p1_upper_p3_lower || p3_upper_p1_lower) {
+            if(tri.p1.z == tri.p3.z)
+                return {};
+            s.p2.x = getCrossingPointX(tri.p1,tri.p3,s.p1.z);
+            s.p2.y = getCrossingPointY(tri.p1,tri.p3,s.p1.z);
+            s.p2.where = 4;
         }
-    } else if(tri.p2.z == s.p1.z) {
-        s.p1 = tri.p2;
-        s.p1.where = 8;
-        if(tri.p3.z == s.p1.z)
-        {
-            s.p2 = tri.p3;
-            s.p2.where = 9;
-        }
-    } else if(tri.p3.z == s.p1.z) {
-        s.p1 = tri. p3;
-        s.p1.where = 10;
     }
     return s;
 }
