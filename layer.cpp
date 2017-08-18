@@ -13,7 +13,7 @@ double layer::getCrossingPointX(point p1, point p2, double yi) {
     } else if(p1.z == p2.z){
         return p1.x;
     } else {
-        return yi * ((p2.x - p1.x) / (p2.z - p1.z));
+        return p1.x + (yi - p1.z) / (p2.z - p1.z) * (p2.x - p1.x);
     }
 }
 
@@ -23,7 +23,7 @@ double layer::getCrossingPointY(point p1, point p2, double yi) {
     } else if(p1.z == p2.z){
         return p1.y;
     } else {
-        return yi * ((p2.y - p1.y) / (p2.z - p1.z));
+        return p1.y + (yi - p1.z) / (p2.z - p1.z) * (p2.y - p1.y);
     }
 }
 
