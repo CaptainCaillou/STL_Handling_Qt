@@ -9,8 +9,8 @@
 #include <QMessageBox>
 #include <vector>
 
-#include "layer.h"
-#include "segment.h"
+#include "Types/layer.h"
+#include "Types/segment.h"
 
 class printer : public QWidget
 {

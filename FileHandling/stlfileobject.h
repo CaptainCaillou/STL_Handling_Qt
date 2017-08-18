@@ -1,8 +1,8 @@
 #ifndef STLFILEOBJECT_H
 #define STLFILEOBJECT_H
 
-#include "datatypes.h"
-#include "triangle.h"
+#include "Types/datatypes.h"
+#include "Types/triangle.h"
 
 #include <QApplication>
 #include <QString>

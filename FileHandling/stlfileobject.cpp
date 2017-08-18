@@ -1,5 +1,5 @@
-﻿#include "stlfileobject.h"
-#include "datatypes.h"
+﻿#include "FileHandling/stlfileobject.h"
+#include "Types/datatypes.h"
 
 #include <QApplication>
 #include <QString>

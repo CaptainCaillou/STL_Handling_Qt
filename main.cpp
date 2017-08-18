@@ -13,11 +13,11 @@
 #include <iostream>
 #include <fstream>
 
-#include "stlfileobject.h"
-#include "datatypes.h"
-#include "segment.h"
-#include "layer.h"
-#include "printer.h"
+#include "FileHandling/stlfileobject.h"
+#include "Types/datatypes.h"
+#include "Types/segment.h"
+#include "Types/layer.h"
+#include "Printer/printer.h"
 
 std::ostream& operator<<(std::ostream& str, const segment& seg){
     str << "p1: x " << seg.p1.x << "\t y " << seg.p1.y << "\t z " << seg.p1.z << std::endl;
@@ -39,10 +39,16 @@ int main(int argc, char *argv[])
 
     printer window;
 
-    //QFile input("../STL_Handler/cube10.stl");
-    QFile input("../STL_Handler/test.stl");
+    //QFile input("../STL_Handler/TestFiles/cube10.stl");
+    //QFile input("../STL_Handler/TestFiles/cubehole.stl");
+    QFile input("../STL_Handler/TestFiles/sphere.stl");
+    //QFile input("../STL_Handler/TestFiles/test.stl");
+
     if (!input.open(QIODevice::ReadOnly))
+    {
         std::cerr << "Can't open file" << std::endl;
+        return -1;
+    }
     if (input.isOpen())
     {
         std::cout << "file open" << std::endl;
@@ -51,17 +57,17 @@ int main(int argc, char *argv[])
         input.close();
 
         layer lay;
-        lay.width =  0.01;
-
-        for(lay.height = 0; lay.height < 100; lay.height += lay.width) {
+        lay.width =  0.1;
+        lay.height = 0;
+        do
+        {
             lay.contours.clear();
             printf("\n##########################\nLayer %f\n", lay.height);
-            //std::cout << window.part.data()->contours.size() << std::endl;
             lay.getContour(triangles);
             window.part.push_back(lay);
-            //std::cout << window.part.data()->contours.size() << std::endl;
-        }
-        window.show();
+            lay.height += lay.width;
+        }while(lay.contours.size() >= 1);
     }
-   return app.exec();
+    window.show();
+    return app.exec();
 }
