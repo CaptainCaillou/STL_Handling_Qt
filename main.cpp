@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
         input.close();
 
         layer lay;
-        lay.width =  0.1;
+        lay.width =  0.01;
 
         for(lay.height = 0; lay.height < 100; lay.height += lay.width) {
             lay.contours.clear();

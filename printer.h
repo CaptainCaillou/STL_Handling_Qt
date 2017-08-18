@@ -23,11 +23,15 @@ class printer : public QWidget
     unsigned int currentLayer;
 
     public slots:
-    void openDialog();
-    //void printLayerContour(std::vector<segment> segs);
+    void incrementLayer();
+    void decrementLayer();
+    void firstLayer();
+
 
     private:
-    QPushButton *m_boutonDialogue;
+    QPushButton *m_boutonInc;
+    QPushButton *m_boutonDec;
+    QPushButton *m_boutonFL;
     QLCDNumber *m_lcd;
     QSlider *m_slider;
 };
