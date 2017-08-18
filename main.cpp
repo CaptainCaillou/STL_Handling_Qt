@@ -34,30 +34,23 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     std::vector<triangle> triangles;
-    StlFileObject StlFileObj;
-    QString stl_raw_data_data;
+
 
     printer window;
 
     //QFile input("../STL_Handler/TestFiles/cube10.stl");
-    //QFile input("../STL_Handler/TestFiles/cubehole.stl");
-    QFile input("../STL_Handler/TestFiles/sphere.stl");
+  //  QFile input("../STL_Handling_Qt/TestFiles/cubehole.stl");
+    //QFile input("../STL_Handler/TestFiles/sphere.stl");
     //QFile input("../STL_Handler/TestFiles/test.stl");
 
-    if (!input.open(QIODevice::ReadOnly))
-    {
-        std::cerr << "Can't open file" << std::endl;
-        return -1;
-    }
-    if (input.isOpen())
-    {
-        std::cout << "file open" << std::endl;
-        stl_raw_data_data = input.readAll();
-        triangles =  StlFileObj.decodeFile(stl_raw_data_data);
-        input.close();
+        StlFileObject StlFileObj;
+        triangles =  StlFileObj.decodeFile("../STL_Handling_Qt/TestFiles/cubehole.stl");
+
+        //triangles = StlFileObj.decodeBinarySTL("../STL_Handling_Qt/TestFiles/cubeholebin.STL");
+
 
         layer lay;
-        lay.width =  0.1;
+        lay.width =  1;
         lay.height = 0;
         do
         {
@@ -67,7 +60,6 @@ int main(int argc, char *argv[])
             window.part.push_back(lay);
             lay.height += lay.width;
         }while(lay.contours.size() >= 1);
-    }
     window.show();
     return app.exec();
 }

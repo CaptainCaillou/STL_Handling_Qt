@@ -11,7 +11,8 @@ class StlFileObject
 {
 public:
     StlFileObject();
-    std::vector<triangle> decodeFile(QString stl_data_brut);
+    std::vector<triangle> decodeFile(QString fileURL);
+    std::vector<triangle> decodeBinarySTL(QString fileURL);
 };
 
 #endif // STLFILEOBJECT_H

@@ -3,17 +3,25 @@
 
 #include <QApplication>
 #include <QString>
+#include <QFile>
 
 #include <iostream>
 #include <vector>
 
 StlFileObject::StlFileObject(){}
 
-std::vector<triangle> StlFileObject::decodeFile(QString stl_data_brut){
-    QString word;
-    std::string text = stl_data_brut.toStdString();
-    int state = 0; //the state machine for decoding
+std::vector<triangle> StlFileObject::decodeFile(QString fileURL){
     std::vector<triangle> triangles;
+    QFile input(fileURL);
+    if (!input.open(QIODevice::ReadOnly))
+    {
+        std::cerr << "Could not open file, Error: "<< errno << " : " << strerror(errno) << std::endl;
+        return triangles;
+    }
+
+    QString word;
+    std::string text = input.readAll().toStdString();
+    int state = 0; //the state machine for decoding
     triangle tmp;
     int cpt = 0;
     for(unsigned int i = 0; i < text.length(); i++)
@@ -94,5 +102,83 @@ std::vector<triangle> StlFileObject::decodeFile(QString stl_data_brut){
         }
     }
     std::cout << "Nb of triangles: " << cpt << std::endl;
+    input.close();
     return triangles;
 }
+
+
+std::vector<triangle> StlFileObject::decodeBinarySTL(QString fileURL) {
+
+    std::vector<triangle> triangles;
+    std::cout << "Opening file `" << fileURL.toStdString() << "` as binary STL.\n" << std::endl;
+    FILE* file = fopen(fileURL.toStdString().c_str(), "r");
+    if (file == NULL) {
+        std::cerr << "Could not open file, Error: "<< errno << " : " << strerror(errno) << std::endl;
+        return triangles;
+    }
+
+
+    char bufferHeader[81] = {0};
+    uint32_t Ntriangles;
+    fread(bufferHeader, 80, 1, file);
+    fread(&Ntriangles, 4, 1, file);
+    printf("STL Header : `%s`\nModel is supposed to have %u triangles\n", bufferHeader, Ntriangles);
+
+
+    //triangleChunk tempTriangle;
+    for(unsigned int i = 0; i < Ntriangles; i++) {
+        std::cout << "Triangle n " << triangles.size() << std::endl;
+        float tempFloat;
+        uint16_t tempInt;
+
+        triangle tmp;
+
+        // 3 first floats are Normal vector coordinates. We ignore them.
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+
+        // Vertex 1 x
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p1.x = tempFloat;
+
+        // Vertex 1 y
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p1.y = tempFloat;
+
+        // Vertex 1 z
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p1.z = tempFloat;
+
+        // Vertex 2 x
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p2.x = tempFloat;
+
+        // Vertex 2 y
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p2.y = tempFloat;
+
+        // Vertex 2 z
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p2.z = tempFloat;
+
+        // Vertex 3 x
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p3.x = tempFloat;
+
+        // Vertex 3 y
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p3.y = tempFloat;
+
+        // Vertex 3 z
+        fread(&tempFloat, sizeof(tempFloat), 1, file);
+        tmp.p3.z = tempFloat;
+
+        fread(&tempInt, sizeof(tempInt), 1, file);
+
+        triangles.push_back(tmp);
+    }
+
+    return triangles;
+}
+
