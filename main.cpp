@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
 
         for(lay.height = 0; lay.height < 10; lay.height += lay.width) {
             lay.contours.clear();
+            printf("\n##########################\nLayer %f\n", lay.height);
             //std::cout << window.part.data()->contours.size() << std::endl;
             lay.getContour(triangles);
             window.part.push_back(lay);
