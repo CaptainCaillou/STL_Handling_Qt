@@ -6,6 +6,7 @@
 #include <QFont>
 #include <QString>
 #include <qlabel.h>
+#include <vector>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,8 +39,8 @@ int main(int argc, char *argv[])
 
     printer window;
 
-    QFile input("../STL_Handler/cube10.stl");
-    //QFile input("../STL_Handler/test.stl");
+    //QFile input("../STL_Handler/cube10.stl");
+    QFile input("../STL_Handler/test.stl");
     if (!input.open(QIODevice::ReadOnly))
         std::cerr << "Can't open file" << std::endl;
     if (input.isOpen())
@@ -52,13 +53,13 @@ int main(int argc, char *argv[])
         layer lay;
         lay.width =  0.1;
 
-        for(lay.height = 0; lay.height < 10; lay.height += lay.width) {
+        for(lay.height = 0; lay.height < 100; lay.height += lay.width) {
             lay.contours.clear();
             printf("\n##########################\nLayer %f\n", lay.height);
             //std::cout << window.part.data()->contours.size() << std::endl;
             lay.getContour(triangles);
             window.part.push_back(lay);
-            std::cout << window.part.data()->contours.size() << std::endl;
+            //std::cout << window.part.data()->contours.size() << std::endl;
         }
         window.show();
     }
