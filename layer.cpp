@@ -44,12 +44,14 @@ segment layer::getCrossingSegment(triangle tri){
     bool p1_upper_p2_lower = ((tri.p1.z > s.p1.z) && (tri.p2.z < s.p1.z));
     bool p2_upper_p1_lower = ((tri.p2.z > s.p1.z) && (tri.p1.z < s.p1.z));
     if(p1_upper_p2_lower || p2_upper_p1_lower) {
+        s.p1.where = 1;
         s.p1.x = getCrossingPointX(tri.p1,tri.p2,s.p1.z);
         s.p1.y = getCrossingPointY(tri.p1,tri.p2,s.p1.z);
         //if the plan in between P2 and P3
         bool p2_upper_p3_lower = ((tri.p2.z > s.p1.z) && (tri.p3.z < s.p1.z));
         bool p3_upper_p2_lower = ((tri.p3.z > s.p1.z) && (tri.p2.z < s.p1.z));
         if(p2_upper_p3_lower || p3_upper_p2_lower) {
+            s.p2.where = 2;
             s.p2.x = getCrossingPointX(tri.p2,tri.p3,s.p1.z);
             s.p2.y = getCrossingPointY(tri.p2,tri.p3,s.p1.z);
         } else {
@@ -57,6 +59,7 @@ segment layer::getCrossingSegment(triangle tri){
             bool p1_upper_p3_lower = ((tri.p1.z > s.p1.z) && (tri.p3.z < s.p1.z));
             bool p3_upper_p1_lower = ((tri.p3.z > s.p1.z) && (tri.p1.z < s.p1.z));
             if(p1_upper_p3_lower || p3_upper_p1_lower) {
+                s.p2.where = 3;
                 s.p2.x = getCrossingPointX(tri.p1,tri.p3,s.p1.z);
                 s.p2.y = getCrossingPointY(tri.p1,tri.p3,s.p1.z);
             }
@@ -68,6 +71,34 @@ segment layer::getCrossingSegment(triangle tri){
 
         s.p2.x = getCrossingPointX(tri.p1,tri.p3,s.p1.z);
         s.p2.y = getCrossingPointY(tri.p1,tri.p3,s.p1.z);
+        s.p1.where = 4;
+        s.p2.where = 4;
+    }
+
+    //now we check if one of the point is exacly on the layer
+    if(tri.p1.z == s.p1.z) {
+        s.p1 = tri.p1;
+        s.p1.where = 5;
+        if(tri.p2.z == s.p2.z) {
+            s.p2 = tri.p2;
+            s.p2.where = 6;
+        }
+        if(tri.p3.z == s.p1.z)
+        {
+            s.p2 = tri.p3;
+            s.p2.where = 7;
+        }
+    } else if(tri.p2.z == s.p1.z) {
+        s.p1 = tri.p2;
+        s.p1.where = 8;
+        if(tri.p3.z == s.p1.z)
+        {
+            s.p2 = tri.p3;
+            s.p2.where = 9;
+        }
+    } else if(tri.p3.z == s.p1.z) {
+        s.p1 = tri. p3;
+        s.p1.where = 10;
     }
     return s;
 }
