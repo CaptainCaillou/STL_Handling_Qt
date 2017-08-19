@@ -29,6 +29,8 @@ double layer::getCrossingPointY(point p1, point p2, double yi) {
 
 segment layer::getCrossingSegment(triangle tri){
     segment s;
+    segment sNull;
+
     //If the triangle is too high or to low in the Z direction
     if((tri.getMaxZ().z < height) || (tri.getMinZ().z > (height + width)))
         return s;
@@ -50,7 +52,8 @@ segment layer::getCrossingSegment(triangle tri){
             return s;
         }
         if(tri.p3.z == s.p1.z) {
-            s.p2 = tri.p3;
+            s.p2.x = tri.p3.x;
+            s.p2.y = tri.p3.y;
             s.p2.where = 7;
             return s;
         }
@@ -58,7 +61,8 @@ segment layer::getCrossingSegment(triangle tri){
         s.p1 = tri.p2;
         s.p1.where = 8;
         if(tri.p3.z == s.p1.z) {
-            s.p2 = tri.p3;
+            s.p2.x = tri.p3.x;
+            s.p2.y = tri.p3.y;
             s.p2.where = 9;
             return s;
         }
@@ -66,23 +70,24 @@ segment layer::getCrossingSegment(triangle tri){
         s.p1 = tri. p3;
         s.p1.where = 10;
     }*/
-
+    s.p1.where = -5;
+    s.p2.where = -5;
     //We are now searching for a crossing between [p1,p2] and our z plan
     bool p1_upper_p2_lower = ((tri.p1.z > s.p1.z) && (tri.p2.z < s.p1.z));
     bool p2_upper_p1_lower = ((tri.p2.z > s.p1.z) && (tri.p1.z < s.p1.z));
     if((p1_upper_p2_lower || p2_upper_p1_lower)) {
-        s.p1.where = 1;
         if(tri.p1.z == tri.p2.z)
             return {};
+        s.p1.where = 1;
         s.p1.x = getCrossingPointX(tri.p1,tri.p2,s.p1.z);
         s.p1.y = getCrossingPointY(tri.p1,tri.p2,s.p1.z);
         //if the plan in between P2 and P3
         bool p2_upper_p3_lower = ((tri.p2.z > s.p1.z) && (tri.p3.z < s.p1.z));
         bool p3_upper_p2_lower = ((tri.p3.z > s.p1.z) && (tri.p2.z < s.p1.z));
         if(p2_upper_p3_lower || p3_upper_p2_lower) {
-            s.p2.where = 2;
             if(tri.p3.z == tri.p2.z)
                 return {};
+            s.p2.where = 2;
             s.p2.x = getCrossingPointX(tri.p2,tri.p3,s.p1.z);
             s.p2.y = getCrossingPointY(tri.p2,tri.p3,s.p1.z);
         } else {
@@ -90,9 +95,9 @@ segment layer::getCrossingSegment(triangle tri){
             bool p1_upper_p3_lower = ((tri.p1.z > s.p1.z) && (tri.p3.z < s.p1.z));
             bool p3_upper_p1_lower = ((tri.p3.z > s.p1.z) && (tri.p1.z < s.p1.z));
             if(p1_upper_p3_lower || p3_upper_p1_lower) {
-                s.p2.where = 3;
                 if(tri.p1.z == tri.p3.z)
                     return {};
+                s.p2.where = 3;
                 s.p2.x = getCrossingPointX(tri.p1,tri.p3,s.p1.z);
                 s.p2.y = getCrossingPointY(tri.p1,tri.p3,s.p1.z);
             }
@@ -104,19 +109,23 @@ segment layer::getCrossingSegment(triangle tri){
         if(p2_upper_p3_lower || p3_upper_p2_lower) {
             if(tri.p2.z == tri.p3.z)
                 return {};
+            s.p1.where = 4;
             s.p1.x = getCrossingPointX(tri.p3,tri.p2,s.p1.z);
             s.p1.y = getCrossingPointY(tri.p3,tri.p2,s.p1.z);
-            s.p1.where = 4;
         }
         bool p1_upper_p3_lower = ((tri.p1.z > s.p1.z) && (tri.p3.z < s.p1.z));
         bool p3_upper_p1_lower = ((tri.p3.z > s.p1.z) && (tri.p1.z < s.p1.z));
         if(p1_upper_p3_lower || p3_upper_p1_lower) {
             if(tri.p1.z == tri.p3.z)
                 return {};
+            s.p2.where = 4;
             s.p2.x = getCrossingPointX(tri.p1,tri.p3,s.p1.z);
             s.p2.y = getCrossingPointY(tri.p1,tri.p3,s.p1.z);
-            s.p2.where = 4;
         }
+
+        //somewhere, something went wrong, this segment is not valid
+        if(s.p1.where == -5 || s.p2.where == -5)
+            return{};
     }
     return s;
 }

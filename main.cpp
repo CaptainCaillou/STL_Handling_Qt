@@ -34,24 +34,21 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     std::vector<triangle> triangles;
-
-
     printer window;
 
     //QFile input("../STL_Handler/TestFiles/cube10.stl");
     //QFile input("../STL_Handler/TestFiles/test.stl");
-  //  QFile input("../STL_Handling_Qt/TestFiles/cubehole.stl");
-    //QFile input("../STL_Handler/TestFiles/sphere.stl");
+    //QFile input("../STL_Handler/TestFiles/cubehole.stl");
 
         StlFileObject StlFileObj;
-        triangles =  StlFileObj.decodeFile("../STL_Handling_Qt/TestFiles/cubehole.stl");
+        //triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/cubehole.stl");
+        triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/sphere.stl");
 
-        //triangles = StlFileObj.decodeBinarySTL("../STL_Handling_Qt/TestFiles/cubeholebin.STL");
-
-
+        //triangles = StlFileObj.decodeBinarySTL("../STL_Handler/TestFiles/cubeholebin.STL");
         layer lay;
-        lay.width =  1;
+        lay.width =  0.1;
         lay.height = 0;
+        bool contour_found = false;
         do
         {
             lay.contours.clear();
@@ -59,7 +56,9 @@ int main(int argc, char *argv[])
             lay.getContour(triangles);
             window.part.push_back(lay);
             lay.height += lay.width;
-        }while(lay.contours.size() >= 1);
+            if(lay.contours.size() > 3)
+                contour_found = true;
+        }while(!contour_found || lay.contours.size() > 0);
     window.show();
     return app.exec();
 }
