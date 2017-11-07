@@ -6,15 +6,23 @@ SOURCES += \
     Types/triangle.cpp \
     Types/layer.cpp \
     Types/segment.cpp \
-    Printer/printer.cpp
+    Printer/printer.cpp \
+    Process/process.cpp \
+    Process/slicer.cpp \
+    Process/filereader.cpp \
+    Process/gcodegenerator.cpp
 
 HEADERS += \
-    stlfileobject.h \
+    FileHandling/stlfileobject.h \
     Types/datatypes.h \
     Types/triangle.h \
     Types/layer.h \
     Types/segment.h \
-    Printer/printer.h
+    Printer/printer.h \
+    Process/process.h \
+    Process/slicer.h \
+    Process/filereader.h \
+    Process/gcodegenerator.h
 
 FORMS += \
     mainwindow.ui
