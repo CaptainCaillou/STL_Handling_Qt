@@ -15,3 +15,6 @@ HEADERS += \
     Types/layer.h \
     Types/segment.h \
     Printer/printer.h
+
+FORMS += \
+    mainwindow.ui

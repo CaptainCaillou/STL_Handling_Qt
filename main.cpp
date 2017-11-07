@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
     //QFile input("../STL_Handler/TestFiles/cubehole.stl");
 
         StlFileObject StlFileObj;
-        //triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/cubehole.stl");
-        triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/sphere.stl");
+        triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/cubehole.stl");
+        //triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/sphere.stl");
 
         //triangles = StlFileObj.decodeBinarySTL("../STL_Handler/TestFiles/cubeholebin.STL");
         layer lay;
