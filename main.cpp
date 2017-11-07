@@ -52,7 +52,6 @@ int main(int argc, char *argv[])
         do
         {
             lay.contours.clear();
-            printf("\n##########################\nLayer %f\n", lay.height);
             lay.getContour(triangles);
             window.part.push_back(lay);
             lay.height += lay.width;
