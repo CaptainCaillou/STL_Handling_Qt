@@ -33,11 +33,12 @@ std::ostream& operator<<(std::ostream& str, const point& point){
 }
 
 int main(int argc, char *argv[])
-{
+
+{   //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL); // Fix pour openGL sur Windows
+
     QApplication app(argc, argv);
     MainWindow window;
     window.show();
-
 
     return app.exec();
 }

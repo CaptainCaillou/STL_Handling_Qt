@@ -1,4 +1,5 @@
-QT += widgets
+QT += widgets \
+    opengl
 
 SOURCES += \
     main.cpp \
@@ -7,7 +8,8 @@ SOURCES += \
     Types/layer.cpp \
     Types/segment.cpp \
     Printer/printer.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    sliceyview.cpp
 
 HEADERS += \
     stlfileobject.h \
@@ -16,8 +18,11 @@ HEADERS += \
     Types/layer.h \
     Types/segment.h \
     Printer/printer.h \
-    mainwindow.h
+    mainwindow.h \
+    sliceyview.h
 
 FORMS += \
     mainwindowbak.ui \
     mainwindow.ui
+
+LIBS += -lOpengl32
