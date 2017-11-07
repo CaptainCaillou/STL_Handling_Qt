@@ -6,7 +6,8 @@ SOURCES += \
     Types/triangle.cpp \
     Types/layer.cpp \
     Types/segment.cpp \
-    Printer/printer.cpp
+    Printer/printer.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     stlfileobject.h \
@@ -14,7 +15,9 @@ HEADERS += \
     Types/triangle.h \
     Types/layer.h \
     Types/segment.h \
-    Printer/printer.h
+    Printer/printer.h \
+    mainwindow.h
 
 FORMS += \
+    mainwindowbak.ui \
     mainwindow.ui
