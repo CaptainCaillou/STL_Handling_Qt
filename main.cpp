@@ -6,12 +6,13 @@
 #include <QFont>
 #include <QString>
 #include <qlabel.h>
-#include <vector>
 
+#include <vector>
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 #include "FileHandling/stlfileobject.h"
 #include "Types/datatypes.h"
@@ -19,45 +20,25 @@
 #include "Types/layer.h"
 #include "Printer/printer.h"
 
-std::ostream& operator<<(std::ostream& str, const segment& seg){
-    str << "p1: x " << seg.p1.x << "\t y " << seg.p1.y << "\t z " << seg.p1.z << std::endl;
-    str << "p2: x " << seg.p2.x << "\t y " << seg.p2.y << "\t z " << seg.p2.z << std::endl;
-    return (str);
-}
+#include "Types/part.h"
 
-std::ostream& operator<<(std::ostream& str, const point& point){
-    str << "x " << point.x << "\t y " << point.y << "\t z " << point.z << std::endl;
-    return (str);
-}
+#include "Process/slicer.h"
+
+
+Slicer slicer;
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    std::vector<triangle> triangles;
-    printer window;
+  QApplication app(argc, argv);
 
-    //QFile input("../STL_Handler/TestFiles/cube10.stl");
-    //QFile input("../STL_Handler/TestFiles/test.stl");
-    //QFile input("../STL_Handler/TestFiles/cubehole.stl");
+  part part_1;
 
-        StlFileObject StlFileObj;
-        triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/cubehole.stl");
-        //triangles =  StlFileObj.decodeFile("../STL_Handler/TestFiles/sphere.stl");
+  StlFileObject StlFileObj;
+  //first load the part
+  //TODO
 
-        //triangles = StlFileObj.decodeBinarySTL("../STL_Handler/TestFiles/cubeholebin.STL");
-        layer lay;
-        lay.width =  0.1;
-        lay.height = 0;
-        bool contour_found = false;
-        do
-        {
-            lay.contours.clear();
-            lay.getContour(triangles);
-            window.part.push_back(lay);
-            lay.height += lay.width;
-            if(lay.contours.size() > 3)
-                contour_found = true;
-        }while(!contour_found || lay.contours.size() > 0);
-    window.show();
-    return app.exec();
+  //then slice the part
+  //slicer.slice(&part_1, 0.1);
+
+  return app.exec();
 }

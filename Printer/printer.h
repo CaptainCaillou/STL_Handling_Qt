@@ -19,7 +19,6 @@ class printer : public QWidget
     public:
     printer();
     void paintEvent(QPaintEvent*);
-    std::vector<layer> part;
     unsigned int currentLayer;
 
     public slots:

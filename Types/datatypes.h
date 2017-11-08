@@ -1,5 +1,6 @@
 #ifndef DATATYPES_H
 #define DATATYPES_H
+#include "iostream"
 
 struct point{
     double x;
@@ -14,5 +15,6 @@ struct vect3d{
     double cy;
     double cz;
 };
+
 
 #endif // DATATYPES_H
