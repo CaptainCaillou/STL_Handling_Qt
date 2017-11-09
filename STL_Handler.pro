@@ -2,7 +2,6 @@ QT += widgets
 
 SOURCES += \
     main.cpp \
-    FileHandling/stlfileobject.cpp \
     Types/triangle.cpp \
     Types/layer.cpp \
     Types/segment.cpp \
@@ -13,7 +12,6 @@ SOURCES += \
     Types/part.cpp
 
 HEADERS += \
-    FileHandling/stlfileobject.h \
     Types/datatypes.h \
     Types/triangle.h \
     Types/layer.h \

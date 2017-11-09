@@ -14,7 +14,7 @@
 #include <fstream>
 #include <thread>
 
-#include "FileHandling/stlfileobject.h"
+#include "Process/filereader.h"
 #include "Types/datatypes.h"
 #include "Types/segment.h"
 #include "Types/layer.h"
@@ -24,7 +24,6 @@
 
 #include "Process/slicer.h"
 
-
 Slicer slicer;
 
 int main(int argc, char *argv[])
@@ -32,13 +31,14 @@ int main(int argc, char *argv[])
   QApplication app(argc, argv);
 
   part part_1;
+  fileReader FileReader;
 
-  StlFileObject StlFileObj;
   //first load the part
+  FileReader.decodeFile(&part_1,"../STL_Handler/TestFiles/cubehole.STL");
   //TODO
 
   //then slice the part
-  //slicer.slice(&part_1, 0.1);
+  slicer.slice(&part_1, 0.1);
 
   return app.exec();
 }

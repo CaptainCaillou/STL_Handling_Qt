@@ -131,13 +131,13 @@ segment layer::getCrossingSegment(triangle tri){
 }
 
 void layer::getContour(std::vector<triangle> triangles){
-    std::cout << "layer::getContour" << std::endl;
+    //std::cout << "layer::getContour" << std::endl;
 
     for (unsigned int i = 0 ; i < triangles.size() ; i++) {
         segment seg = getCrossingSegment(triangles[i]);
         if(!seg.isEmpty)
         {
-
+          /*
             printf("Triangle :\n1 : x %4.4g y %4.4g z %4.4g\n2 : x %4.4g y %4.4g z %4.4g\n3 : x %4.4g y %4.4g z %4.4g\nSegment :\n1 : x %4.4g y %4.4g z %4.4g w %4d\n2 : x %4.4g y %4.4g z %4.4g w %4d\n\n",
                   triangles[i].p1.x, triangles[i].p1.y, triangles[i].p1.z,
                   triangles[i].p2.x, triangles[i].p2.y, triangles[i].p2.z,
@@ -145,8 +145,9 @@ void layer::getContour(std::vector<triangle> triangles){
                   seg.p1.x, seg.p1.y, seg.p1.z, seg.p1.where,
                   seg.p2.x, seg.p2.y, seg.p2.z, seg.p2.where
                    );
+          */
             contours.push_back(seg);
         }
     }
-    std::cout << contours.size() << std::endl;
+    //std::cout << contours.size() << std::endl;
 }
