@@ -12,6 +12,8 @@
 
 #include "Process/slicer.h"
 
+#include "Vue3D/glwidget.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -53,6 +55,7 @@ void MainWindow::on_boutonLireFichier_clicked()
 void MainWindow::on_horizontalSlider_2_valueChanged(int value)
 {
     MAJVue3D();
+
 }
 
 void MainWindow::MAJVue3D(void) {

@@ -13,7 +13,9 @@ SOURCES += \
     Process/filereader.cpp \
     Process/gcodegenerator.cpp \
     Types/part.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    Vue3D/glwidget.cpp \
+    Vue3D/logo.cpp
 
 HEADERS += \
     Types/datatypes.h \
@@ -25,7 +27,9 @@ HEADERS += \
     Process/filereader.h \
     Process/gcodegenerator.h \
     Types/part.h \
-    mainwindow.h
+    mainwindow.h \
+    Vue3D/glwidget.h \
+    Vue3D/logo.h
 
 FORMS += \
     mainwindowbak.ui \
