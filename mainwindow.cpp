@@ -12,6 +12,8 @@
 
 #include "Process/slicer.h"
 
+#include "Vue3D/glwidget.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
