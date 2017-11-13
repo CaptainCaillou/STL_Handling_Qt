@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   QApplication app(argc, argv);
 
   part part_1;
-
+//bite
   //first load the part
   fileReader* FileReader = new fileReader;
   FileReader->decodeFile(&part_1,"../STL_Handler/TestFiles/cubehole.STL");
