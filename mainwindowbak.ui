@@ -6,21 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>940</width>
-    <height>661</height>
+    <width>949</width>
+    <height>584</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Slicey</string>
+   <string>Slicer - BESSE - JOUBERT</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QOpenGLWidget" name="openGLWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>641</width>
+      <height>541</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>650</x>
       <y>0</y>
       <width>20</width>
-      <height>611</height>
+      <height>551</height>
      </rect>
     </property>
     <property name="orientation">
@@ -30,10 +40,10 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>660</x>
+      <x>670</x>
       <y>10</y>
       <width>271</width>
-      <height>125</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="title">
@@ -44,7 +54,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>171</width>
+       <width>160</width>
        <height>22</height>
       </rect>
      </property>
@@ -52,7 +62,7 @@
     <widget class="QPushButton" name="boutonParcourir">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>180</x>
        <y>20</y>
        <width>71</width>
        <height>23</height>
@@ -101,28 +111,12 @@
       <string>Lire fichier</string>
      </property>
     </widget>
-    <widget class="QProgressBar" name="progressBarFile">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>251</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="textVisible">
-      <bool>false</bool>
-     </property>
-    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>660</x>
-      <y>400</y>
+      <x>670</x>
+      <y>340</y>
       <width>271</width>
       <height>211</height>
      </rect>
@@ -250,177 +244,14 @@
       <string>Contours plans</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBox_4">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>130</y>
-       <width>70</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Origine</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBox_5">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>150</y>
-       <width>70</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Grille</string>
-     </property>
-    </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_3">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>140</y>
-      <width>271</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Tranchage</string>
-    </property>
-    <widget class="QPushButton" name="boutonSlicer">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>20</y>
-       <width>111</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Démarrer</string>
-     </property>
-    </widget>
-    <widget class="QProgressBar" name="progressBarSlice">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>251</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="textVisible">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_4">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>260</y>
-      <width>271</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Exportation</string>
-    </property>
-    <widget class="QProgressBar" name="progressBarExport">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>251</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="textVisible">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="boutonParcourir_2">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>20</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Parcourir</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="champFichier_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>171</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="boutonLireFichier_3">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>90</y>
-       <width>111</width>
-       <height>30</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Ecrire fichier</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="GLWidget" name="openGLWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>651</width>
-      <height>611</height>
-     </rect>
-    </property>
-   </widget>
+   <zorder>groupBox</zorder>
+   <zorder>openGLWidget</zorder>
+   <zorder>line_2</zorder>
+   <zorder>groupBox_2</zorder>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>940</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>GLWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header location="global">Vue3D/glwidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
