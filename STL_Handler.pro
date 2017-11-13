@@ -12,7 +12,8 @@ SOURCES += \
     Process/slicer.cpp \
     Process/filereader.cpp \
     Process/gcodegenerator.cpp \
-    Types/part.cpp
+    Types/part.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     Types/datatypes.h \
@@ -23,7 +24,8 @@ HEADERS += \
     Process/slicer.h \
     Process/filereader.h \
     Process/gcodegenerator.h \
-    Types/part.h
+    Types/part.h \
+    mainwindow.h
 
 FORMS += \
     mainwindowbak.ui \

@@ -27,43 +27,15 @@
 
 #include "Process/slicer.h"
 
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
-  part part_1;
-//bite
-  //first load the part
-  fileReader* FileReader = new fileReader;
-  FileReader->decodeFile(&part_1,"../STL_Handler/TestFiles/cubehole.STL");
-  //free the memory
-  delete FileReader;
 
-  //slicing part
-  Slicer* slicer = new Slicer;
-  slicer->setPart(part_1);
-  slicer->setSlicerWidth(0.0002);
-  //then slice the part
-  slicer->start();
-  int state = 0;
-  for(int i = 0; !slicer->isFinished() ; i++)
-  {
-    state =  slicer->getState();
-    if (state != -1)
-      std::cout << "Slice in progress : " << state << std::endl;
-    Sleep(125);
-  }
-
-  //just for safety, but we normally don't need to wait
-  slicer->wait();
-  std::cout << "Slice finished" << std::endl;
-
-  //then we copy the part sliced to our main part
-  part_1 = slicer->getPart();
-
-  //we free the memory
-  delete slicer;
+  MainWindow ui;
+  ui.show();
 
   return app.exec();
 }

@@ -101,7 +101,7 @@
       <string>Lire fichier</string>
      </property>
     </widget>
-    <widget class="QProgressBar" name="progressBar">
+    <widget class="QProgressBar" name="progressBarFile">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -277,16 +277,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="SliceyView" name="VueOpenGL">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>631</width>
-      <height>601</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
@@ -299,7 +289,7 @@
     <property name="title">
      <string>Tranchage</string>
     </property>
-    <widget class="QPushButton" name="boutonLireFichier_2">
+    <widget class="QPushButton" name="boutonSlicer">
      <property name="geometry">
       <rect>
        <x>80</x>
@@ -312,7 +302,7 @@
       <string>Démarrer</string>
      </property>
     </widget>
-    <widget class="QProgressBar" name="progressBar_2">
+    <widget class="QProgressBar" name="progressBarSlice">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -341,7 +331,7 @@
     <property name="title">
      <string>Exportation</string>
     </property>
-    <widget class="QProgressBar" name="progressBar_3">
+    <widget class="QProgressBar" name="progressBarExport">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -414,13 +404,6 @@
    </property>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>SliceyView</class>
-   <extends>QOpenGLWidget</extends>
-   <header>sliceyview.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
