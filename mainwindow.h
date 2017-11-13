@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "Types/part.h"
 #include "Process/slicer.h"
+#include "Process/filereader.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,15 +27,18 @@ private slots:
 
     void on_boutonSlicer_clicked();
 
-    void updateSliceProgressBar();
+    void updateFileReadingProgressBar();
 
+    void updateSliceProgressBar();
 
 private:
     Ui::MainWindow *ui;
 
     part part_1;
+    fileReader *FileReader;
     Slicer *slicer;
-    QTimer *timer;
+    QTimer *timer_fileReading;
+    QTimer *timer_slice;
     void MAJVue3D(void);
 };
 

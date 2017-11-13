@@ -37,17 +37,16 @@ int main(int argc, char *argv[])
 
   //first load the part
   fileReader* FileReader = new fileReader;
-  FileReader->setPart(part_1);
-  FileReader->setFileUrl("../STL_Handler/TestFiles/cubehole.STL");
-  FileReader->start();
-  for(int i = 0; !FileReader->isFinished() ; i++)
-  {
-    state =  FileReader->getState();
-    if (state != -1)
-      std::cout << "Reading in progress : " << state << std::endl;
-    Sleep(1);
-  }
-  part_1 = FileReader->getPart();
+  //FileReader->setPart(part_1);
+  //FileReader->setFileUrl("../STL_Handler/TestFiles/cubehole.STL");
+  //FileReader->start();
+  //for(int i = 0; !FileReader->isFinished() ; i++)
+  //{
+  //  state =  FileReader->getState();
+   // if (state != -1)
+   //   std::cout << "Reading in progress : " << state << std::endl;
+   // Sleep(1);
+ // }
 
   //free the memory
   delete FileReader;
