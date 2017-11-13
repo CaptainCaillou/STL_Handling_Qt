@@ -8,10 +8,7 @@
 #include <qlabel.h>
 #include <QFuture>
 
-
 #include <vector>
-#include <stdlib.h>
-#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <thread>

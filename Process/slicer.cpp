@@ -55,6 +55,7 @@ void Slicer::setPart(part Part)
 {
   this->Part = Part;
 }
+
 part Slicer::getPart(void)
 {
   return (this->Part);
