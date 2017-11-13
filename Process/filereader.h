@@ -21,12 +21,13 @@ public:
   void setPart(part Part);
   part getPart(void);
   void setFileUrl(QString fileUrl);
-  std::vector<triangle> decodeFile();
-  std::vector<triangle> decodeBinarySTL();
+  std::vector<triangle> decodeFile(QString text);
+  std::vector<triangle> decodeBinarySTL(QString fileURL);
 
 private:
   QString fileUrl;
   part Part;
+  FILE* file;
 };
 
 #endif // FILEREADER_H

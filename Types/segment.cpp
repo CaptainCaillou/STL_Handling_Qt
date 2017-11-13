@@ -6,10 +6,11 @@ std::ostream& operator<<(std::ostream& str, const segment& seg){
   str << "p2: x " << seg.p2.x << "\t y " << seg.p2.y << "\t z " << seg.p2.z << std::endl;
   return (str);
 }
-std::ostream& operator<<(std::ostream& str, const point& point){
+
+/*std::ostream& operator<<(std::ostream& str, const point& point){
   str << "x " << point.x << "\t y " << point.y << "\t z " << point.z << std::endl;
   return (str);
-}
+}*/
 
 segment::segment()
 {

@@ -30,26 +30,8 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
-
   MainWindow ui;
   ui.show();
-  int state = 0;
-
-  //first load the part
-  fileReader* FileReader = new fileReader;
-  //FileReader->setPart(part_1);
-  //FileReader->setFileUrl("../STL_Handler/TestFiles/cubehole.STL");
-  //FileReader->start();
-  //for(int i = 0; !FileReader->isFinished() ; i++)
-  //{
-  //  state =  FileReader->getState();
-   // if (state != -1)
-   //   std::cout << "Reading in progress : " << state << std::endl;
-   // Sleep(1);
- // }
-
-  //free the memory
-  delete FileReader;
 
   return app.exec();
 }
