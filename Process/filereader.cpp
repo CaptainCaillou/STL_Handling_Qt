@@ -7,11 +7,24 @@ fileReader::fileReader()
 
 }
 
+void fileReader::setPart(part Part)
+{
+  this->Part = Part;
+}
 
+part fileReader::getPart(void)
+{
+  return this->Part;
+}
 
-std::vector<triangle> fileReader::decodeFile(part* Part,QString fileURL){
+void fileReader::setFileUrl(QString fileUrl)
+{
+  this->fileUrl = fileUrl;
+}
+
+std::vector<triangle> fileReader::decodeFile(){
     std::vector<triangle> triangles;
-    QFile input(fileURL);
+    QFile input(this->fileUrl);
     double highest_point = 0;
     if (!input.open(QIODevice::ReadOnly))
     {
@@ -116,22 +129,22 @@ std::vector<triangle> fileReader::decodeFile(part* Part,QString fileURL){
             word.clear();
         }
     }
-    Part->setHeight(highest_point);
+    Part.setHeight(highest_point);
 
     std::cout << "Nb of triangles: "  << cpt << std::endl;
     std::cout << "Highest_point: "    << highest_point << std::endl;
 
     input.close();
-    Part->setTriangles(triangles);
+    Part.setTriangles(triangles);
     return triangles;
 }
 
 
-std::vector<triangle> fileReader::decodeBinarySTL(part* Part, QString fileURL) {
+std::vector<triangle> fileReader::decodeBinarySTL() {
 
     std::vector<triangle> triangles;
-    std::cout << "Opening file `" << fileURL.toStdString() << "` as binary STL.\n" << std::endl;
-    FILE* file = fopen(fileURL.toStdString().c_str(), "r");
+    std::cout << "Opening file `" << this->fileUrl.toStdString() << "` as binary STL.\n" << std::endl;
+    FILE* file = fopen(this->fileUrl.toStdString().c_str(), "r");
     if (file == NULL) {
         std::cerr << "Could not open file, Error: "<< errno << " : " << strerror(errno) << std::endl;
         return triangles;
@@ -198,6 +211,6 @@ std::vector<triangle> fileReader::decodeBinarySTL(part* Part, QString fileURL) {
 
         triangles.push_back(tmp);
     }
-    Part->setTriangles(triangles);
+    Part.setTriangles(triangles);
     return triangles;
 }

@@ -11,10 +11,17 @@
 
 class fileReader : public process
 {
+private:
+  QString fileUrl;
+  part Part;
+
 public:
   fileReader();
-  std::vector<triangle> decodeFile(part* Part, QString fileURL);
-  std::vector<triangle> decodeBinarySTL(part* Part,QString fileURL);
+  void setPart(part Part);
+  part getPart(void);
+  void setFileUrl(QString fileUrl);
+  std::vector<triangle> decodeFile();
+  std::vector<triangle> decodeBinarySTL();
 };
 
 #endif // FILEREADER_H

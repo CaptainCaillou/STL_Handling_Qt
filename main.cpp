@@ -36,7 +36,10 @@ int main(int argc, char *argv[])
 
   //first load the part
   fileReader* FileReader = new fileReader;
-  FileReader->decodeFile(&part_1,"../STL_Handler/TestFiles/cubehole.STL");
+  FileReader->setPart(part_1);
+  FileReader->setFileUrl("../STL_Handler/TestFiles/cubehole.STL");
+  FileReader->decodeFile();
+  part_1 = FileReader->getPart();
   //free the memory
   delete FileReader;
 
