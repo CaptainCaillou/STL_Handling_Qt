@@ -1,5 +1,7 @@
 QT += widgets
 
+@DEFINES += CORE_LIBRARY@
+
 SOURCES += \
     main.cpp \
     Types/triangle.cpp \

@@ -3,15 +3,24 @@
 
 #include "process.h"
 #include "Types/part.h"
+#include "Types/layer.h"
 
 class Slicer : public process
 {
-
-private:
-  int state;
 public:
   Slicer();
-  void slice(part* P, double lay_width);
+
+private:
+  //int state;
+  part Part;
+  double slicerWidth;
+
+public:
+  void run() override;
+  void setPart(part Part);
+  part getPart(void);
+  void setSlicerWidth(double width);
+  int  getState(void);
 };
 
 #endif // SLICER_H

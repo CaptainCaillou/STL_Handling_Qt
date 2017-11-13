@@ -23,3 +23,14 @@ void part::setLayers(std::vector<layer> layer_set) {
 std::vector<layer> part::getLayers(){
   return this->layers;
 }
+
+
+void part::setHeight(double height)
+{
+  this->height = height;
+}
+
+double part::getHeight()
+{
+  return this->height;
+}

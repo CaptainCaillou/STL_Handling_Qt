@@ -1,19 +1,18 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
+#include <QThread>
+#include <QTimer>
+#include <iostream>
 
-class process
+class process : public QThread
 {
+  Q_OBJECT
+  virtual void run();
 private:
   bool isRunning;
+protected:
   int state;
-
-public:
-  int  getState();
-  void kill();
-
-public:
-  process();
 };
 
 #endif // PROCESS_H

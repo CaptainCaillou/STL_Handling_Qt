@@ -7,8 +7,9 @@
 #include "Types/datatypes.h"
 #include "Types/triangle.h"
 #include "Types/part.h"
+#include "process.h"
 
-class fileReader
+class fileReader : public process
 {
 public:
   fileReader();

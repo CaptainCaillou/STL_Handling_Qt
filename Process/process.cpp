@@ -1,11 +1,6 @@
 #include "process.h"
 
-process::process()
+void process::run()
 {
-  this->state = -1;
-}
-
-int process::getState()
-{
-  return this->state;
+  std::cout << std::endl;
 }

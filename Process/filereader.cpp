@@ -8,9 +8,11 @@ fileReader::fileReader()
 }
 
 
+
 std::vector<triangle> fileReader::decodeFile(part* Part,QString fileURL){
     std::vector<triangle> triangles;
     QFile input(fileURL);
+    double highest_point = 0;
     if (!input.open(QIODevice::ReadOnly))
     {
         std::cerr << "Could not open file, Error: "<< errno << " : " << strerror(errno) << std::endl;
@@ -50,6 +52,11 @@ std::vector<triangle> fileReader::decodeFile(part* Part,QString fileURL){
                 break;
             case 5:
                 tmp.p1.z = word.toDouble();
+                if(highest_point < tmp.p1.z)
+                {
+                  highest_point = tmp.p1.z;
+                  std::cout << highest_point << std::endl;
+                }
                 state++;
             case 6:
                 state++; //nothing
@@ -70,6 +77,11 @@ std::vector<triangle> fileReader::decodeFile(part* Part,QString fileURL){
                 break;
             case 11:
                 tmp.p2.z = word.toDouble();
+                if(highest_point < tmp.p2.z)
+                {
+                  highest_point = tmp.p2.z;
+                  std::cout << highest_point << std::endl;
+                }
                 state++;
                 break;
             case 12:
@@ -88,6 +100,11 @@ std::vector<triangle> fileReader::decodeFile(part* Part,QString fileURL){
                 break;
             case 16:
                 tmp.p3.z = word.toDouble();
+                if(highest_point < tmp.p3.z)
+                {
+                  highest_point = tmp.p3.z;
+                  std::cout << highest_point << std::endl;
+                }
                 state = 0;
                 tmp.id = cpt;
                 triangles.push_back(tmp);
@@ -99,7 +116,11 @@ std::vector<triangle> fileReader::decodeFile(part* Part,QString fileURL){
             word.clear();
         }
     }
-    std::cout << "Nb of triangles: " << cpt << std::endl;
+    Part->setHeight(highest_point);
+
+    std::cout << "Nb of triangles: "  << cpt << std::endl;
+    std::cout << "Highest_point: "    << highest_point << std::endl;
+
     input.close();
     Part->setTriangles(triangles);
     return triangles;
