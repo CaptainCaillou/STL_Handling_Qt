@@ -10,6 +10,12 @@ void Slicer::run()
   this->state = 0;
   layer lay;
   lay.width = this->slicerWidth;
+  if(lay.width <= 0)
+  {
+    std::cerr << "Seriously, want to slice with layer height <= 0 ?!" << std::endl;
+    std::cerr << "The layer height has been set to 0.1mm" << std::endl;
+    lay.width = 0.1;
+  }
 
   std::vector<layer> layers;
   bool contour_found = false;
@@ -17,11 +23,9 @@ void Slicer::run()
   //We get the triangles from the part
   std::vector<triangle> triangles = this->Part.getTriangles();
 
-  //std::cout << "Nb of triangles : " << triangles.size() << std::endl;
   //We search every layer
   do
   {
-
     lay.contours.clear();
     lay.getContour(triangles);
 
