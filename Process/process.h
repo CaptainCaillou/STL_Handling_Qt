@@ -8,11 +8,11 @@
 class process : public QThread
 {
   Q_OBJECT
-  virtual void run();
 private:
   bool isRunning;
 protected:
   int state;
+  virtual void run();
 };
 
 #endif // PROCESS_H

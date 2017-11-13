@@ -34,12 +34,22 @@ int main(int argc, char *argv[])
 
   part part_1;
 
+  int state = 0;
+
   //first load the part
   fileReader* FileReader = new fileReader;
   FileReader->setPart(part_1);
   FileReader->setFileUrl("../STL_Handler/TestFiles/cubehole.STL");
-  FileReader->decodeFile();
+  FileReader->start();
+  for(int i = 0; !FileReader->isFinished() ; i++)
+  {
+    state =  FileReader->getState();
+    if (state != -1)
+      std::cout << "Reading in progress : " << state << std::endl;
+    Sleep(1);
+  }
   part_1 = FileReader->getPart();
+
   //free the memory
   delete FileReader;
 
@@ -49,7 +59,6 @@ int main(int argc, char *argv[])
   slicer->setSlicerWidth(0.0002);
   //then slice the part
   slicer->start();
-  int state = 0;
   for(int i = 0; !slicer->isFinished() ; i++)
   {
     state =  slicer->getState();
