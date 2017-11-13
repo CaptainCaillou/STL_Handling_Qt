@@ -1,4 +1,5 @@
-QT += widgets
+QT += widgets \
+    opengl
 
 @DEFINES += CORE_LIBRARY@
 
@@ -25,4 +26,7 @@ HEADERS += \
     Types/part.h
 
 FORMS += \
+    mainwindowbak.ui \
     mainwindow.ui
+
+LIBS += -lOpengl32
