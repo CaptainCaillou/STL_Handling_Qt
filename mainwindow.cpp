@@ -146,3 +146,9 @@ void MainWindow::on_horizontalSlider_rangeChanged(int,int)
 
 }
 
+
+void MainWindow::on_checkBox_clicked()
+{
+  this->ui->openGLWidget->VisualizeEdge = this->ui->checkBox->isChecked();
+  ui->openGLWidget->update();
+}

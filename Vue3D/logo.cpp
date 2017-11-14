@@ -51,12 +51,12 @@
 #include "logo.h"
 #include <qmath.h>
 #include <iostream>
-
+#include "Types/datatypes.h"
 Logo::Logo()
-    : m_count(0)
+  : m_count(0)
 {
-    m_data.resize(2500 * 6);
-
+  m_data.resize(2500 * 6);
+  /*
     static const GLfloat g_vertex_buffer_data[] = {
         -1.0f,-1.0f,-1.0f, // triangle 1 : begin
         -1.0f,-1.0f, 1.0f,
@@ -96,103 +96,129 @@ Logo::Logo()
         1.0f,-1.0f, 1.0f
     };
 
-    for(int i = 0; i < 12; i+=3)
+    for(int i = 0; i < 12; i+=9)
     {
       QVector3D n = QVector3D::normal(QVector3D(0.0f, 0.0f, -0.1f), QVector3D(g_vertex_buffer_data[i],g_vertex_buffer_data[i+1], g_vertex_buffer_data[i+2]));
       add(QVector3D(g_vertex_buffer_data[i],g_vertex_buffer_data[i+1], g_vertex_buffer_data[i+2]), n);
       m_count += 3;
     }
+*
 
-    const GLfloat x1 = +0.06f;
-    const GLfloat y1 = -0.14f;
-    const GLfloat x2 = +0.14f;
-    const GLfloat y2 = -0.06f;
-    const GLfloat x3 = +0.08f;
-    const GLfloat y3 = +0.00f;
-    const GLfloat x4 = +0.30f;
-    const GLfloat y4 = +0.22f;
+    const QVector3D v1(+0.06f,-0.14f,+0.14f);
+    const QVector3D v2(+0.02f,-0.10f,-0.14f);
+    const QVector3D v3(-0.02f,+0.2f,-0.05f);
+    QVector3D n = QVector3D::normal(v1, v2);
+    add(v3, n);
+*/
 
-    quad(x1, y1, x2, y2, y2, x2, y1, x1);
-    quad(x3, y3, x4, y4, y4, x4, y3, x3);
+  const QVector3D p1(+0.0f, +0.0f, +0.0f);
+  const QVector3D p2(+0.1f, +0.1f, -0.5f);
+  const QVector3D p3(+0.1f, +0.0f, -0.1f);
+  const QVector3D p4(+0.0f, +0.1f, +0.0f);
 
-    extrude(x1, y1, x2, y2);
-    extrude(x2, y2, y2, x2);
-    extrude(y2, x2, y1, x1);
-    extrude(y1, x1, x1, y1);
-    extrude(x3, y3, x4, y4);
-    extrude(x4, y4, y4, x4);
-    extrude(y4, x4, y3, x3);
+  //triangle(p1, p2, p3);
+  tetra(p1,p2,p3,p4);
 
-    const int NumSectors = 100;
-
-    for (int i = 0; i < NumSectors; ++i) {
-        GLfloat angle = (i * 2 * M_PI) / NumSectors;
-        GLfloat angleSin = qSin(angle);
-        GLfloat angleCos = qCos(angle);
-        const GLfloat x5 = 0.30f * angleSin;
-        const GLfloat y5 = 0.30f * angleCos;
-        const GLfloat x6 = 0.20f * angleSin;
-        const GLfloat y6 = 0.20f * angleCos;
-
-        angle = ((i + 1) * 2 * M_PI) / NumSectors;
-        angleSin = qSin(angle);
-        angleCos = qCos(angle);
-        const GLfloat x7 = 0.20f * angleSin;
-        const GLfloat y7 = 0.20f * angleCos;
-        const GLfloat x8 = 0.30f * angleSin;
-        const GLfloat y8 = 0.30f * angleCos;
-
-        quad(x5, y5, x6, y6, x7, y7, x8, y8);
-
-        extrude(x6, y6, x7, y7);
-        extrude(x8, y8, x5, y5);
-    }
+  /*
+  triangle(x1, y1, z1, x2, y2, z2, x4, y4, z4);
+  triangle(x1, y1, z1, x3, y3, z3, x4, y4, z4);
+  triangle(x2, y2, z2, x3, y3, z3, x4, y4, z4);
+  */
 }
 
 void Logo::add(const QVector3D &v, const QVector3D &n)
 {
-    GLfloat *p = m_data.data() + m_count;
-    *p++ = v.x();
-    *p++ = v.y();
-    *p++ = v.z();
-    *p++ = n.x();
-    *p++ = n.y();
-    *p++ = n.z();
-    m_count += 6;
+  GLfloat *p = m_data.data() + m_count;
+  *p++ = v.x();
+  *p++ = v.y();
+  *p++ = v.z();
+  *p++ = n.x();
+  *p++ = n.y();
+  *p++ = n.z();
+  m_count += 6;
 }
 
-void Logo::quad(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3, GLfloat y3, GLfloat x4, GLfloat y4)
+void Logo::quad(GLfloat x1, GLfloat y1, GLfloat z1,
+                GLfloat x2, GLfloat y2, GLfloat z2,
+                GLfloat x3, GLfloat y3, GLfloat z3,
+                GLfloat x4, GLfloat y4, GLfloat z4)
 {
-    QVector3D n = QVector3D::normal(QVector3D(x4 - x1, y4 - y1, 0.0f), QVector3D(x2 - x1, y2 - y1, 0.0f));
+  QVector3D n = QVector3D::normal(QVector3D(x4 - x1, y4 - y1, z4 - z1), QVector3D(x2 - x1, y2 - y1, z2 - z1));
 
-    add(QVector3D(x1, y1, -0.05f), n);
-    add(QVector3D(x4, y4, -0.05f), n);
-    add(QVector3D(x2, y2, -0.05f), n);
+  add(QVector3D(x1, y1, z1), n);
+  add(QVector3D(x4, y4, z4), n);
+  add(QVector3D(x2, y2, z2), n);
 
-    add(QVector3D(x3, y3, -0.05f), n);
-    add(QVector3D(x2, y2, -0.05f), n);
-    add(QVector3D(x4, y4, -0.05f), n);
+  add(QVector3D(x3, y3, z3), n);
+  add(QVector3D(x2, y2, z2), n);
+  add(QVector3D(x4, y4, z4), n);
 
-    n = QVector3D::normal(QVector3D(x1 - x4, y1 - y4, 0.0f), QVector3D(x2 - x4, y2 - y4, 0.0f));
+  n = QVector3D::normal(QVector3D(x1 - x4, y1 - y4, z1 - z4), QVector3D(x2 - x4, y2 - y4, z2 - z4));
 
-    add(QVector3D(x4, y4, 0.05f), n);
-    add(QVector3D(x1, y1, 0.05f), n);
-    add(QVector3D(x2, y2, 0.05f), n);
+  add(QVector3D(x4, y4, z4), n);
+  add(QVector3D(x1, y1, z1), n);
+  add(QVector3D(x2, y2, z2), n);
 
-    add(QVector3D(x2, y2, 0.05f), n);
-    add(QVector3D(x3, y3, 0.05f), n);
-    add(QVector3D(x4, y4, 0.05f), n);
+  add(QVector3D(x2, y2, z2), n);
+  add(QVector3D(x3, y3, z3), n);
+  add(QVector3D(x4, y4, z4), n);
 }
 
-void Logo::extrude(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2)
+void Logo::triangle(const QVector3D p1,
+                    const QVector3D p2,
+                    const QVector3D p3) {
+  QVector3D n = QVector3D::normal(p3-p1, p2-p1);
+
+  add(p1, n);
+  add(p3, n);
+  add(p2, n);
+
+  add(p3, n);
+  add(p2, n);
+  add(p1, n);
+
+
+  n = QVector3D::normal(p1-p3, p2-p1);
+
+  add(p3, n);
+  add(p1, n);
+  add(p2, n);
+
+  add(p2, n);
+  add(p3, n);
+  add(p1, n);
+}
+/*
+void Logo::triangle(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, GLfloat x3, GLfloat y3, GLfloat z3, GLfloat x4, GLfloat y4, GLfloat z4)
 {
-    QVector3D n = QVector3D::normal(QVector3D(0.0f, 0.0f, -0.1f), QVector3D(x2 - x1, y2 - y1, 0.0f));
+    QVector3D n = QVector3D::normal(QVector3D(x4 - x1, y4 - y1, z4 - z1), QVector3D(x2 - x1, y2 - y1, z2 - z1));
 
-    add(QVector3D(x1, y1, +0.05f), n);
-    add(QVector3D(x1, y1, -0.05f), n);
-    add(QVector3D(x2, y2, +0.05f), n);
+    add(QVector3D(x1, y1, z1), n);
+    add(QVector3D(x4, y4, z4), n);
+    add(QVector3D(x2, y2, z2), n);
 
-    add(QVector3D(x2, y2, -0.05f), n);
-    add(QVector3D(x2, y2, +0.05f), n);
-    add(QVector3D(x1, y1, -0.05f), n);
+    add(QVector3D(x3, y3, z3), n);
+    add(QVector3D(x2, y2, z2), n);
+    add(QVector3D(x4, y4, z4), n);
+
+    n = QVector3D::normal(QVector3D(x1 - x4, y1 - y4, z1 - z4), QVector3D(x2 - x4, y2 - y4, z2 - z4));
+
+    add(QVector3D(x4, y4, z4), n);
+    add(QVector3D(x1, y1, z1), n);
+    add(QVector3D(x2, y2, z2), n);
+
+    add(QVector3D(x2, y2, z2), n);
+    add(QVector3D(x3, y3, z3), n);
+    add(QVector3D(x4, y4, z4), n);
+}
+*/
+void Logo::tetra(const QVector3D p1,
+                 const QVector3D p2,
+                 const QVector3D p3,
+                 const QVector3D p4)
+{
+  triangle(p1, p2, p3);
+  triangle(p1, p2, p4);
+  triangle(p1, p3, p4);
+  triangle(p2, p3, p4);
 }

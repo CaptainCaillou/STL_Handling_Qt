@@ -221,6 +221,9 @@
      <property name="text">
       <string>Arêtes</string>
      </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
     </widget>
     <widget class="QCheckBox" name="checkBox_2">
      <property name="geometry">

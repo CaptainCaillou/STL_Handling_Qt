@@ -76,6 +76,7 @@ public:
     QSize sizeHint() const override;
 
     void zoom(float  zoom);
+    bool VisualizeEdge;
 
 public slots:
     void setXRotation(int angle);
@@ -106,7 +107,9 @@ private:
     Logo m_logo;
     part3d test;
     QOpenGLVertexArrayObject m_vao;
+    QOpenGLVertexArrayObject m_vao2;
     QOpenGLBuffer m_logoVbo;
+    QOpenGLBuffer m_testVbo;
     QOpenGLShaderProgram *m_program;
     int m_projMatrixLoc;
     int m_mvMatrixLoc;

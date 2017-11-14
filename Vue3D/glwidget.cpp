@@ -196,7 +196,6 @@ static const char *fragmentShaderSource =
 
 void GLWidget::initializeGL()
 {
-    std::cout <<"boooooop !!" << std::endl;
     // In this example the widget's corresponding top-level window can change
     // several times during the widget's lifetime. Whenever this happens, the
     // QOpenGLWidget's associated context is destroyed and a new one is created.
@@ -226,13 +225,23 @@ void GLWidget::initializeGL()
     // implementations this is optional and support may not be present
     // at all. Nonetheless the below code works in all cases and makes
     // sure there is a VAO when one is needed.
-    m_vao.create();
-    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
-    // Setup our vertex buffer object.
+    m_vao.create();
+    m_vao2.create();
+    m_testVbo.create();
     m_logoVbo.create();
+
+    QOpenGLVertexArrayObject::Binder vaoBinder2(&m_vao2);
+    m_testVbo.bind();
+    m_testVbo.allocate(test.constData(), test.count() * sizeof(GLfloat));
+
+    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
+    // Setup our vertex buffer object.
     m_logoVbo.bind();
     m_logoVbo.allocate(m_logo.constData(), m_logo.count() * sizeof(GLfloat));
+
+    // Store the vertex attribute bindings for the program.
+
 
     // Store the vertex attribute bindings for the program.
     setupVertexAttribs();
@@ -250,34 +259,54 @@ void GLWidget::initializeGL()
 
 void GLWidget::setupVertexAttribs()
 {
-    m_logoVbo.bind();
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-    f->glEnableVertexAttribArray(0);
-    f->glEnableVertexAttribArray(1);
-    f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
-    f->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
-    m_logoVbo.release();
+  m_testVbo.bind();
+  QOpenGLFunctions *g = QOpenGLContext::currentContext()->functions();
+  g->glEnableVertexAttribArray(0);
+  g->glEnableVertexAttribArray(1);
+  g->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
+  g->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
+  m_testVbo.release();
+
+  m_logoVbo.bind();
+  QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+  f->glEnableVertexAttribArray(0);
+  f->glEnableVertexAttribArray(1);
+  f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), 0);
+  f->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
+  m_logoVbo.release();
 }
 
 void GLWidget::paintGL()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
 
-    m_world.setToIdentity();
-    m_world.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
-    m_world.rotate(m_yRot / 16.0f, 0, 1, 0);
-    m_world.rotate(m_zRot / 16.0f, 0, 0, 1);
+    if(VisualizeEdge)
+    {
 
-    QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
-    m_program->bind();
-    m_program->setUniformValue(m_projMatrixLoc, m_proj);
-    m_program->setUniformValue(m_mvMatrixLoc, m_camera * m_world);
-    QMatrix3x3 normalMatrix = m_world.normalMatrix();
-    m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
+      QOpenGLVertexArrayObject::Binder vaoBinder2(&m_vao2);
+      //glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
+      //m_logoVbo.allocate(test.constData(), test.count() * sizeof(GLfloat));
+      glDrawArrays(GL_LINES, 0, test.vertexCount());
+    }else{
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glEnable(GL_DEPTH_TEST);
+      glEnable(GL_CULL_FACE);
 
-    glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
+      m_logoVbo.allocate(m_logo.constData(), m_logo.count() * sizeof(GLfloat));
+
+      m_world.setToIdentity();
+      m_world.rotate(180.0f - (m_xRot / 16.0f), 1, 0, 0);
+      m_world.rotate(m_yRot / 16.0f, 0, 1, 0);
+      m_world.rotate(m_zRot / 16.0f, 0, 0, 1);
+
+      QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
+      m_program->bind();
+      m_program->setUniformValue(m_projMatrixLoc, m_proj);
+      m_program->setUniformValue(m_mvMatrixLoc, m_camera * m_world);
+      QMatrix3x3 normalMatrix = m_world.normalMatrix();
+      m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
+
+      glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
+    }
 
     m_program->release();
 }

@@ -43,6 +43,8 @@ private slots:
 
     void on_horizontalSlider_rangeChanged(int min, int max);
 
+    void on_checkBox_clicked();
+
 private:
     Ui::MainWindow *ui;
 
