@@ -368,7 +368,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="boutonLireFichier_3">
+    <widget class="QPushButton" name="boutonEcrireFichier">
      <property name="geometry">
       <rect>
        <x>80</x>

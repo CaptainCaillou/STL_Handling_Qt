@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 
-#include "Process/filereader.h"
 #include "Types/datatypes.h"
 #include "Types/segment.h"
 #include "Types/layer.h"
@@ -10,7 +9,9 @@
 
 #include "Types/part.h"
 
+#include "Process/filereader.h"
 #include "Process/slicer.h"
+#include "Process/gcodegenerator.h"
 
 #include "Vue3D/glwidget.h"
 
@@ -146,3 +147,10 @@ void MainWindow::on_horizontalSlider_rangeChanged(int,int)
 
 }
 
+void MainWindow::on_boutonEcrireFichier_clicked()
+{
+    GCodeGenerator test;
+    test.setPart(part_1);
+    test.start();
+    while(!test.isFinished());
+}
