@@ -104,3 +104,45 @@ void MainWindow::on_boutonSlicer_clicked() {
   // On démarre la fonction qui met à jour la progressBar et qui supprime le slicer à la fin
   timer_slice->start(10);
 }
+
+static float oldZoom = 0;
+void MainWindow::on_horizontalSlider_sliderMoved(int position)
+{
+  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
+  ui->openGLWidget->update();
+  oldZoom = position;
+}
+
+void MainWindow::on_horizontalSlider_sliderReleased()
+{
+  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
+  ui->openGLWidget->update();
+  oldZoom = ui->horizontalSlider->value();
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
+  ui->openGLWidget->update();
+  oldZoom = ui->horizontalSlider->value();
+}
+
+void MainWindow::on_horizontalSlider_actionTriggered(int action)
+{
+  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
+  ui->openGLWidget->update();
+  oldZoom = ui->horizontalSlider->value();
+}
+
+void MainWindow::on_horizontalSlider_sliderPressed()
+{
+  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
+  ui->openGLWidget->update();
+  oldZoom = ui->horizontalSlider->value();
+}
+
+void MainWindow::on_horizontalSlider_rangeChanged(int,int)
+{
+
+}
+

@@ -196,6 +196,7 @@ static const char *fragmentShaderSource =
 
 void GLWidget::initializeGL()
 {
+    std::cout <<"boooooop !!" << std::endl;
     // In this example the widget's corresponding top-level window can change
     // several times during the widget's lifetime. Whenever this happens, the
     // QOpenGLWidget's associated context is destroyed and a new one is created.
@@ -244,6 +245,7 @@ void GLWidget::initializeGL()
     m_program->setUniformValue(m_lightPosLoc, QVector3D(0, 0, 70));
 
     m_program->release();
+    paintGL();
 }
 
 void GLWidget::setupVertexAttribs()
@@ -304,4 +306,10 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         setZRotation(m_zRot + 8 * dx);
     }
     m_lastPos = event->pos();
+}
+
+void GLWidget::zoom(float zoom)
+{
+  m_camera.translate(0,0,zoom);
+  m_program->release();
 }

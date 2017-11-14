@@ -31,6 +31,18 @@ private slots:
 
     void updateSliceProgressBar();
 
+    void on_horizontalSlider_sliderMoved(int position);
+
+    void on_horizontalSlider_sliderReleased();
+
+    void on_horizontalSlider_valueChanged(int value);
+
+    void on_horizontalSlider_actionTriggered(int action);
+
+    void on_horizontalSlider_sliderPressed();
+
+    void on_horizontalSlider_rangeChanged(int min, int max);
+
 private:
     Ui::MainWindow *ui;
 

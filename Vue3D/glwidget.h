@@ -57,6 +57,7 @@
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
 #include "Vue3D/logo.h"
+#include "Vue3D/part3d.h"
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -73,6 +74,8 @@ public:
 
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
+
+    void zoom(float  zoom);
 
 public slots:
     void setXRotation(int angle);
@@ -101,6 +104,7 @@ private:
     int m_zRot;
     QPoint m_lastPos;
     Logo m_logo;
+    part3d test;
     QOpenGLVertexArrayObject m_vao;
     QOpenGLBuffer m_logoVbo;
     QOpenGLShaderProgram *m_program;

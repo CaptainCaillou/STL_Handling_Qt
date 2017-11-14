@@ -50,11 +50,58 @@
 
 #include "logo.h"
 #include <qmath.h>
+#include <iostream>
 
 Logo::Logo()
     : m_count(0)
 {
     m_data.resize(2500 * 6);
+
+    static const GLfloat g_vertex_buffer_data[] = {
+        -1.0f,-1.0f,-1.0f, // triangle 1 : begin
+        -1.0f,-1.0f, 1.0f,
+        -1.0f, 1.0f, 1.0f, // triangle 1 : end
+        1.0f, 1.0f,-1.0f, // triangle 2 : begin
+        -1.0f,-1.0f,-1.0f,
+        -1.0f, 1.0f,-1.0f, // triangle 2 : end
+        1.0f,-1.0f, 1.0f,
+        -1.0f,-1.0f,-1.0f,
+        1.0f,-1.0f,-1.0f,
+        1.0f, 1.0f,-1.0f,
+        1.0f,-1.0f,-1.0f,
+        -1.0f,-1.0f,-1.0f,
+        -1.0f,-1.0f,-1.0f,
+        -1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f,-1.0f,
+        1.0f,-1.0f, 1.0f,
+        -1.0f,-1.0f, 1.0f,
+        -1.0f,-1.0f,-1.0f,
+        -1.0f, 1.0f, 1.0f,
+        -1.0f,-1.0f, 1.0f,
+        1.0f,-1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f,-1.0f,-1.0f,
+        1.0f, 1.0f,-1.0f,
+        1.0f,-1.0f,-1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f,-1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f,-1.0f,
+        -1.0f, 1.0f,-1.0f,
+        1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f,-1.0f,
+        -1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, 1.0f,
+        1.0f,-1.0f, 1.0f
+    };
+
+    for(int i = 0; i < 12; i+=3)
+    {
+      QVector3D n = QVector3D::normal(QVector3D(0.0f, 0.0f, -0.1f), QVector3D(g_vertex_buffer_data[i],g_vertex_buffer_data[i+1], g_vertex_buffer_data[i+2]));
+      add(QVector3D(g_vertex_buffer_data[i],g_vertex_buffer_data[i+1], g_vertex_buffer_data[i+2]), n);
+      m_count += 3;
+    }
 
     const GLfloat x1 = +0.06f;
     const GLfloat y1 = -0.14f;
