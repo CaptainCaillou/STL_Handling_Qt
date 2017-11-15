@@ -57,7 +57,6 @@
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
 #include "Vue3D/logo.h"
-#include "Vue3D/part3d.h"
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
 
@@ -103,13 +102,11 @@ private:
     int m_xRot;
     int m_yRot;
     int m_zRot;
+
     QPoint m_lastPos;
     Logo m_logo;
-    part3d test;
     QOpenGLVertexArrayObject m_vao;
-    QOpenGLVertexArrayObject m_vao2;
     QOpenGLBuffer m_logoVbo;
-    QOpenGLBuffer m_testVbo;
     QOpenGLShaderProgram *m_program;
     int m_projMatrixLoc;
     int m_mvMatrixLoc;
