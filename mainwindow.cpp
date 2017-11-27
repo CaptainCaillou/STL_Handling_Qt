@@ -90,6 +90,9 @@ void MainWindow::updateSliceProgressBar() {
     delete slicer;
     std::cout << "Slice finished" << std::endl;
     timer_slice->stop();
+
+
+    ui->openGLWidget->loadPart(part_1);
   }
 }
 

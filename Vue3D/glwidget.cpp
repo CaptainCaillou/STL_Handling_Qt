@@ -57,6 +57,7 @@
 #include <iostream>
 #include "QGLColormap"
 
+
 bool GLWidget::m_transparent = false;
 
 GLWidget::GLWidget(QWidget *parent)
@@ -161,14 +162,18 @@ static const char *fragmentShaderSourceCore =
     "in highp vec3 vertNormal;\n"
     "out highp vec4 fragColor;\n"
     "uniform highp vec3 lightPos;\n"
+    "uniform mediump vec4 color;\n"
+
     "void main() {\n"
     "   highp vec3 L = normalize(lightPos - vert);\n"
     "   highp float NL = max(dot(normalize(vertNormal), L), 0.0);\n"
-    "   highp vec3 color = vec3(0.39, 1.0, 1.0);\n"
-    "   highp vec3 col = clamp(color * 0.2 + color * 0.8 * NL, 0.0, 1.0);\n"
-    "   fragColor = vec4(col, 1.0);\n"
+    "   gl_FragColor = color;\n"
     "}\n";
-
+/*
+"   highp vec3 color = vec3(0.39, 1.0, 1.0);\n"
+"   highp vec3 col = clamp(color * 0.2 + color * 0.8 * NL, 0.0, 1.0);\n"
+"   fragColor = vec4(col, 1.0);\n"
+*/
 static const char *vertexShaderSource =
     "attribute vec4 vertex;\n"
     "attribute vec3 normal;\n"
@@ -187,43 +192,20 @@ static const char *fragmentShaderSource =
     "varying highp vec3 vert;\n"
     "varying highp vec3 vertNormal;\n"
     "uniform highp vec3 lightPos;\n"
+
+    "uniform mediump vec4 color;\n"
     "void main() {\n"
     "   highp vec3 L = normalize(lightPos - vert);\n"
     "   highp float NL = max(dot(normalize(vertNormal), L), 0.0);\n"
-    "   highp vec3 color = vec3(0.39, 1.0, 0.0);\n"
-    "   highp vec3 col = clamp(color * 0.2 + color * 0.8 * NL, 0.0, 1.0);\n"
-    "   gl_FragColor = vec4(col, 1.0);\n"
+    "   gl_FragColor = color;\n"
     "}\n";
 
-static const char *GridXSourceCore =
-    "#version 150\n"
-    "in vec4 vertex;\n"
-    "in vec3 normal;\n"
-    "out vec3 vert;\n"
-    "out vec3 vertNormal;\n"
-    "uniform mat4 projMatrix;\n"
-    "uniform mat4 mvMatrix;\n"
-    "uniform mat3 normalMatrix;\n"
-    "void main() {\n"
-    "   vert = vertex.xyz;\n"
-    "   vertNormal = normalMatrix * normal;\n"
-    "   gl_Position = projMatrix * mvMatrix * vertex;\n"
-    "}\n";
-
-static const char *GridXSource =
-    "attribute vec4 vertex;\n"
-    "attribute vec3 normal;\n"
-    "varying vec3 vert;\n"
-    "varying vec3 vertNormal;\n"
-    "uniform mat4 projMatrix;\n"
-    "uniform mat4 mvMatrix;\n"
-    "uniform mat3 normalMatrix;\n"
-    "void main() {\n"
-    "   vert = vertex.xyz;\n"
-    "   vertNormal = normalMatrix * normal;\n"
-    "   gl_Position = projMatrix * mvMatrix * vertex;\n"
-    "}\n";
-
+/*
+"float r;\n"// = 1.0;\n"
+"   highp vec3 color = vec3(r, 1.0, 0.0);\n"
+"   highp vec3 col = clamp(color * 0.2 + color * 0.8 * NL, 0.0, 1.0);\n"
+"   gl_FragColor = vec4(col, 1.0);\n"
+*/
 void GLWidget::initializeGL()
 {
   // In this example the widget's corresponding top-level window can change
@@ -242,14 +224,14 @@ void GLWidget::initializeGL()
 
   m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, m_core ? vertexShaderSourceCore : vertexShaderSource);
   m_program->addShaderFromSourceCode(QOpenGLShader::Fragment, m_core ? fragmentShaderSourceCore : fragmentShaderSource);
-  //m_program->addShaderFromSourceCode(QOpenGLShader::Vertex, GridXSource);
   m_program->bindAttributeLocation("vertex", 0);
   m_program->bindAttributeLocation("normal", 1);
-  //m_program->bindAttributeLocation("gridX", 3);
-
   m_program->link();
 
   m_program->bind();
+
+
+  colorLocation = m_program->uniformLocation("color");
 
   m_projMatrixLoc = m_program->uniformLocation("projMatrix");
   m_mvMatrixLoc = m_program->uniformLocation("mvMatrix");
@@ -306,25 +288,55 @@ void GLWidget::paintGL()
   m_world.rotate(m_yRot / 16.0f, 0, 1, 0);
   m_world.rotate(m_zRot / 16.0f, 0, 0, 1);
 
+
+//  QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
+  // Setup our vertex buffer object.
+  m_logoVbo.bind();
+  // Store the vertex attribute bindings for the program.
   m_logoVbo.allocate(m_logo.constData(), m_logo.count() * sizeof(GLfloat));
+
+  // Store the vertex attribute bindings for the program.
+  setupVertexAttribs();
+
+  m_logoVbo.allocate(m_logo.constData(), m_logo.count() * sizeof(GLfloat));
+
+  glColor3ub(255,0,0);
+
+  QColor color;
 
   QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
   m_program->bind();
   m_program->attributeLocation("normal");
+
   m_program->setUniformValue(m_projMatrixLoc, m_proj);
   m_program->setUniformValue(m_mvMatrixLoc, m_camera * m_world);
   QMatrix3x3 normalMatrix = m_world.normalMatrix();
+
+  m_program->setUniformValue(colorLocation, color);
   m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
-  glColor3ub(255,0,0);
+
+  color = QColor(0,255,0,100);
+  m_program->setUniformValue(colorLocation, color);
   glDrawArrays(GL_LINES, m_logo.grid_x_start_index, m_logo.grid_x_end_index);
+
+  //The y grid
+  color = QColor(255,0,0,100);
+  m_program->setUniformValue(colorLocation, color);
+  glDrawArrays(GL_LINES, m_logo.grid_y_start_index, m_logo.grid_y_end_index);
 
   if(VisualizeEdge)
   {
-    //glDrawArrays(GL_LINES, m_logo.part1_start_index, m_logo.part1_end_index);
+    color = QColor(255,255,255,100);
+    m_program->setUniformValue(colorLocation, color);
+    glDrawArrays(GL_LINES, m_logo.part1_start_index, m_logo.part1_end_index);
   }else{
-
-    //glDrawArrays(GL_TRIANGLES, m_logo.part1_start_index, m_logo.part1_end_index);
+    color = QColor(0,0,0,100);
+    m_program->setUniformValue(colorLocation, color);
+    glDrawArrays(GL_LINES, m_logo.part1_start_index, m_logo.part1_end_index);
+    color = QColor(255,255,255,255);
+    m_program->setUniformValue(colorLocation, color);
+    glDrawArrays(GL_TRIANGLES, m_logo.part1_start_index, m_logo.part1_end_index);
   }
 
   m_program->release();
@@ -334,6 +346,12 @@ void GLWidget::resizeGL(int w, int h)
 {
   m_proj.setToIdentity();
   m_proj.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
+}
+
+void GLWidget::loadPart(part Part)
+{
+  m_logo.loadPart(Part);
+  m_program->release();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)

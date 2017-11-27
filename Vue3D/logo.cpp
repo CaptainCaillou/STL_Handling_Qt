@@ -52,6 +52,9 @@
 #include <qmath.h>
 #include <iostream>
 #include "Types/datatypes.h"
+#include "Types/triangle.h"
+
+
 Logo::Logo()
   : m_count(0)
 {
@@ -77,7 +80,6 @@ Logo::Logo()
   grid_y_end_index = vertexCount();
 
   //some test display
-  //triangle(p1, p2, p3);
   //tetra(p1,p2,p3,p4);
 }
 
@@ -128,7 +130,7 @@ void Logo::line(const QVector3D p1, const QVector3D p2)
   add(p2,n);
   add(p1,n);
 }
-void Logo::triangle(const QVector3D p1,
+void Logo::d_triangle(const QVector3D p1,
                     const QVector3D p2,
                     const QVector3D p3) {
   QVector3D n = QVector3D::normal(p3-p1, p2-p1);
@@ -156,8 +158,24 @@ void Logo::tetra(const QVector3D p1,
                  const QVector3D p3,
                  const QVector3D p4)
 {
-  triangle(p1, p2, p3);
-  triangle(p1, p2, p4);
-  triangle(p1, p3, p4);
-  triangle(p2, p3, p4);
+  d_triangle(p1, p2, p3);
+  d_triangle(p1, p2, p4);
+  d_triangle(p1, p3, p4);
+  d_triangle(p2, p3, p4);
+}
+
+void Logo::loadPart(part Part)
+{
+  std::vector<triangle> triangles = Part.getTriangles();
+  part1_start_index= vertexCount()+1;
+
+  for(unsigned int i = 0; i < triangles.size(); i++)
+  {
+    std::cout << "x   p1 :" << triangles[i].p1.to3dVector().x() <<" p2: " <<  triangles[i].p2.to3dVector().x() << " p3: " << triangles[i].p3.to3dVector().x() << std::endl;
+    std::cout << "y   p1 :" << triangles[i].p1.to3dVector().y() <<" p2: " <<  triangles[i].p2.to3dVector().y() << " p3: " << triangles[i].p3.to3dVector().y() << std::endl;
+    std::cout << "z   p1 :" << triangles[i].p1.to3dVector().z() <<" p2: " <<  triangles[i].p2.to3dVector().z() << " p3: " << triangles[i].p3.to3dVector().z() << std::endl;
+    d_triangle(triangles[i].p1.to3dVector(),triangles[i].p2.to3dVector(),triangles[i].p3.to3dVector());
+  }
+  part1_end_index = vertexCount();
+  std::cout << "Part from:" << part1_start_index << "to: " << part1_end_index << std::endl;
 }

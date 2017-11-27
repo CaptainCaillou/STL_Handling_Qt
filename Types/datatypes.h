@@ -1,13 +1,8 @@
 #ifndef DATATYPES_H
 #define DATATYPES_H
 #include "iostream"
+#include "Types/point.h"
 
-struct point{
-    double x;
-    double y;
-    double z;
-    int where; //for debugging, we are searching where the point has been modified
-};
 
 struct vect3d{
     point origin;

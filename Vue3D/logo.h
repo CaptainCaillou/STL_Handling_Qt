@@ -54,6 +54,7 @@
 #include <qopengl.h>
 #include <QVector>
 #include <QVector3D>
+#include "Types/part.h"
 
 class Logo
 {
@@ -83,7 +84,7 @@ private:
               GLfloat x3, GLfloat y3, GLfloat z3,
               GLfloat x4, GLfloat y4, GLfloat z4);
 
-    void triangle(const QVector3D p1,
+    void d_triangle(const QVector3D p1,
                   const QVector3D p2,
                   const QVector3D p3);
 
@@ -96,6 +97,9 @@ private:
 
     QVector<GLfloat> m_data;
     int m_count;
+
+public:
+    void loadPart(part Part);
 };
 
 #endif // LOGO_H
