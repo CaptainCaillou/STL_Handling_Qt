@@ -24,6 +24,9 @@ std::vector<layer> part::getLayers(){
   return this->layers;
 }
 
+layer part::getLayer(int i){
+  return this->layers[i];
+}
 
 void part::setHeight(double height)
 {

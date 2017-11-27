@@ -19,6 +19,7 @@ public:
   std::vector<layer> getLayers(void);
   void setHeight(double height);
   double getHeight(void);
+  layer getLayer(int i);
 };
 
 #endif // PART_H
