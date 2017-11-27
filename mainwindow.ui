@@ -358,7 +358,7 @@
       <string>Parcourir</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="champFichier_2">
+    <widget class="QLineEdit" name="champFichierExport">
      <property name="geometry">
       <rect>
        <x>10</x>

@@ -5,6 +5,7 @@
 #include "Types/part.h"
 #include "Process/slicer.h"
 #include "Process/filereader.h"
+#include "Process/gcodegenerator.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,6 +32,8 @@ private slots:
 
     void updateSliceProgressBar();
 
+    void updateExportProgressBar();
+
     void on_horizontalSlider_sliderMoved(int position);
 
     void on_horizontalSlider_sliderReleased();
@@ -45,14 +48,18 @@ private slots:
 
     void on_boutonEcrireFichier_clicked();
 
+    void on_boutonParcourir_2_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     part part_1;
     fileReader *FileReader;
     Slicer *slicer;
+    GCodeGenerator *exporteur;
     QTimer *timer_fileReading;
     QTimer *timer_slice;
+    QTimer *timer_export;
     void MAJVue3D(void);
 };
 

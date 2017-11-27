@@ -3,39 +3,51 @@
 #include "Types/layer.h"
 #include "Types/segment.h"
 #include <stdio.h>
+#include <QFile>
+#include <QTextStream>
 
 GCodeGenerator::GCodeGenerator() {
 
 }
 
 void GCodeGenerator::run() {
-        printf("run !\n");
-        std::cerr << Part.getLayers().size();
-        for(int i = 0; i < Part.getLayers().size(); i++)
-            std::cout << i << std::endl;
-    /*for(std::vector<layer>::iterator itl = Part.getLayers().begin(); itl != Part.getLayers().end(); itl++) {
+    printf("run !\n");
+    int nbLayers = Part.getLayers().size();
 
-        for(std::vector<segment>::iterator its = itl->contours.begin(); its != itl->contours.end(); its++) {
-            //toolPath trajet;
-            //trajet.z1 = trajet.z2 = itl->height;
-            /*trajet.x1 = its->p1.x;
-            trajet.y1 = its->p1.y;
-            trajet.x2 = its->p2.x;
-            trajet.y2 = */
-            //printf("Pouette");
-           // printf("%lf\n", its->p2.y);
-           // trajets.push_back(trajet);
-           // std::cout << "BOOOOP" << std::endl;
-            //printf("Trajet de %lf %lf %lf à %lf %lf %lf\n", trajet.x1, trajet.y1, trajet.z1, trajet.x2, trajet.y2, trajet.z2);
+    QFile sortie(this->fileUrl);
+    if (!sortie.open(QIODevice::WriteOnly))
+    {
+      std::cerr << "Could not open file, Error: "<< errno << " : " << strerror(errno) << std::endl;
+    }
+    QTextStream sortieStream(&sortie);
+
+    for(int il = 0; il < nbLayers; il++) {
+
+        state = (il*100)/nbLayers;
+
+        layer couche = Part.getLayer(il);
+        int nbSeg = couche.contours.size();
+
+        for(int is = 0; is < nbSeg; is++) {
+            segment seg = couche.contours[is];
+            toolPath trajet;
+            trajet.z1 = trajet.z2 = couche.height;
+            trajet.x1 = seg.p1.x;
+            trajet.y1 = seg.p1.y;
+            trajet.x2 = seg.p2.x;
+            trajet.y2 = seg.p2.y;;
+            trajets.push_back(trajet);
+
+            //std::cout << "z1 :" << trajet.z1 << " z2 :" << trajet.z2 << " x1 :" << trajet.x1 << " x2 :" << trajet.x2 << "\n";
             //fflush(stdout);
-     //   }
-    //}
-    for(int i = 0; i < 10; i++) printf("Boop !\n");
+            sortieStream << trajet.getGCodeBegin() << trajet.getGCodeEnd();
+        }
+    }
+    sortie.close();
 }
 
 int GCodeGenerator::getState() {
-
-    return 0;
+    return state;
 }
 
 void GCodeGenerator::setPart(part Part) {
@@ -46,8 +58,4 @@ void GCodeGenerator::setPart(part Part) {
 
 void GCodeGenerator::setFileUrl(QString fileUrl) {
     this->fileUrl = fileUrl;
-}
-
-void writeFile(QString text) {
-
 }

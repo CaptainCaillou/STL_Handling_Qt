@@ -12,10 +12,14 @@ toolPath::toolPath()
 }
 
 QString toolPath::getGCodeBegin() {
-    return "G0 X" + QString::number(x1) + " Y" + QString::number(y1) + " Z" + QString::number(z1) + "\n";
+    QString retour;
+    retour.sprintf("G0 X%0.5f Y%0.5f Z%0.5f\n", x1, y1, z1);
+    return retour;
 }
 
 QString toolPath::getGCodeEnd() {
-    return "G1 X" + QString::number(x1) + " Y" + QString::number(y1) + " Z" + QString::number(z1) + "\n";
+    QString retour;
+    retour.sprintf("G1 X%0.5f Y%0.5f Z%0.5f\n", x2, y2, z2);
+    return retour;
 }
 

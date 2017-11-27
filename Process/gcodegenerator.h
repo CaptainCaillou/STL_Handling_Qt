@@ -20,7 +20,6 @@ public:
 public:
   void setPart(part Part);
   void setFileUrl(QString fileUrl);
-  std::vector<triangle> writeFile(QString text);
 
 private:
   void optimize();
@@ -28,7 +27,7 @@ private:
   QString fileUrl;
   part Part;
   FILE* file;
-  std::vector<segment> layers;
+  //std::vector<segment> layers;
   std::vector<toolPath> trajets;
   int state;
 };
