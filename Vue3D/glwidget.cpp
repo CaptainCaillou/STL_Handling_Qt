@@ -352,7 +352,10 @@ void GLWidget::loadPart(part Part)
 {
   m_logo.loadPart(Part);
   m_program->release();
+  update();
 }
+
+
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
@@ -371,11 +374,28 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     setXRotation(m_xRot + 8 * dy);
     setZRotation(m_zRot + 8 * dx);
   }
+
   m_lastPos = event->pos();
+}
+void GLWidget::wheelEvent(QWheelEvent *event)
+{
+      int numDegrees = event->delta() / 8;
+      int numSteps = numDegrees / 15;
+
+      zoom(numSteps);
+      /*
+      if (event->orientation() == Qt::Horizontal) {
+          scrollHorizontally(numSteps);
+      } else {
+          scrollVertically(numSteps);
+      }
+      */
+      event->accept();
 }
 
 void GLWidget::zoom(float zoom)
 {
   m_camera.translate(0,0,zoom);
   m_program->release();
+  update();
 }
