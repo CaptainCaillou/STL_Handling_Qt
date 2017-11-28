@@ -60,12 +60,6 @@ Logo::Logo()
 {
   m_data.resize(2500 * 6);
 
-  //some test points
-  const QVector3D p1(+0.0f, +0.0f, +0.0f);
-  const QVector3D p2(+0.1f, +0.1f, -0.5f);
-  const QVector3D p3(+0.1f, +0.0f, -0.1f);
-  const QVector3D p4(+0.0f, +0.1f, +0.0f);
-
   grid_x_start_index = vertexCount();
   for(int i = -10; i <= 10; i++)
   {
@@ -78,9 +72,6 @@ Logo::Logo()
     line(QVector3D(-10,i,0),QVector3D(10,i,0)); // the x lines
   }
   grid_y_end_index = vertexCount();
-
-  //some test display
-  //tetra(p1,p2,p3,p4);
 }
 
 void Logo::add(const QVector3D &v, const QVector3D &n)
@@ -127,8 +118,8 @@ void Logo::line(const QVector3D p1, const QVector3D p2)
   add(p1,n);
   add(p2,n);
   n = QVector3D::normal(p1-p2, p1-p2);
-  add(p2,n);
   add(p1,n);
+  add(p2,n);
 }
 void Logo::d_triangle(const QVector3D p1,
                     const QVector3D p2,
@@ -139,18 +130,18 @@ void Logo::d_triangle(const QVector3D p1,
   add(p3, n);
   add(p2, n);
 
-  add(p3, n);
-  add(p2, n);
   add(p1, n);
+  add(p2, n);
+  add(p3, n);
 
   n = QVector3D::normal(p1-p3, p2-p1);
-  add(p3, n);
   add(p1, n);
+  add(p3, n);
   add(p2, n);
 
+  add(p1, n);
   add(p2, n);
   add(p3, n);
-  add(p1, n);
 }
 
 void Logo::tetra(const QVector3D p1,

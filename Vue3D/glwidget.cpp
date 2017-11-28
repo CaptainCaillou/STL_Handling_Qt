@@ -355,8 +355,6 @@ void GLWidget::loadPart(part Part)
   update();
 }
 
-
-
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
   m_lastPos = event->pos();
