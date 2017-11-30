@@ -58,7 +58,7 @@
 Logo::Logo()
   : m_count(0)
 {
-  m_data.resize(2500 * 6);
+  m_data.resize(200000 * 6);
 
   grid_x_start_index = vertexCount();
   for(int i = -10; i <= 10; i++)
@@ -157,16 +157,15 @@ void Logo::tetra(const QVector3D p1,
 
 void Logo::loadPart(part Part)
 {
+  m_count = grid_y_end_index * 6;
   std::vector<triangle> triangles = Part.getTriangles();
-  part1_start_index= vertexCount()+1;
+  part1_start_index = vertexCount();
 
+  std::cout << "Nb of triangles" << triangles.size() << std::endl;
   for(unsigned int i = 0; i < triangles.size(); i++)
   {
-    //std::cout << "x   p1 :" << triangles[i].p1.to3dVector().x() <<" p2: " <<  triangles[i].p2.to3dVector().x() << " p3: " << triangles[i].p3.to3dVector().x() << std::endl;
-    //std::cout << "y   p1 :" << triangles[i].p1.to3dVector().y() <<" p2: " <<  triangles[i].p2.to3dVector().y() << " p3: " << triangles[i].p3.to3dVector().y() << std::endl;
-    //std::cout << "z   p1 :" << triangles[i].p1.to3dVector().z() <<" p2: " <<  triangles[i].p2.to3dVector().z() << " p3: " << triangles[i].p3.to3dVector().z() << std::endl;
     d_triangle(triangles[i].p1.to3dVector(),triangles[i].p2.to3dVector(),triangles[i].p3.to3dVector());
   }
   part1_end_index = vertexCount();
-  std::cout << "Part from:" << part1_start_index << "to: " << part1_end_index << std::endl;
+  std::cout << "Part from:" << part1_start_index << "to: " << part1_end_index << " Total of " << (part1_end_index - part1_start_index)/6 << " triangles." << std::endl;
 }

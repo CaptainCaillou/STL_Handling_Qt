@@ -35,7 +35,7 @@ std::vector<triangle> fileReader::decodeFile(QString text){
   triangle tmp;
   int cpt = 0;
 
-  for(unsigned int i = 0; i < text.length(); i++)
+  for(int i = 0; i < text.length(); i++)
   {
     this->state = i*100 / text.length();
     word.push_back(text[i]);

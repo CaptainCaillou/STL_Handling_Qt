@@ -412,5 +412,6 @@ void GLWidget::releaseMProgram(void)
 
 void GLWidget::loadLogo(part logo)
 {
+  //initializeGL();
   this->m_logo.loadPart(logo);
 }
