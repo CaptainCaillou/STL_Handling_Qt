@@ -77,13 +77,15 @@ void MainWindow::updateFileReadingProgressBar() {
     }
     else {
         ui->progressBarFile->setValue(100);
+        part_1 = FileReader->getPart();
+        ui->openGLWidget->loadLogo(part_1);
         ui->openGLWidget->displayPart(part_1);
         part_1 = FileReader->getPart();
     }
     delete FileReader;
     std::cout << "FileReading finished" << std::endl;
     timer_fileReading->stop();
-    
+
   }
 }
 
@@ -108,7 +110,7 @@ void MainWindow::updateSliceProgressBar() {
     }
     delete slicer;
     timer_slice->stop();
-    
+
   }
 }
 
@@ -128,7 +130,7 @@ void MainWindow::updateExportProgressBar() {
       }
       else {
           ui->progressBarExport->setValue(100);
-          ui->openGLWidget->loadPart(part_1);
+          //ui->openGLWidget->loadPart(part_1);
           std::cout << "Export finished" << std::endl;
       }
     delete exporteur;
@@ -142,7 +144,7 @@ void MainWindow::on_boutonSlicer_clicked() {
   ui->boutonSlicer->setText("Démarrer");
   slicer = new Slicer;
   slicer->setPart(part_1);
-  slicer->setSlicerWidth(ui->spinBox_sliceHeight->value()/1000000.);
+  slicer->setSlicerWidth(ui->spinBox_sliceHeight->value()/1000.);
   //then slice the part
   slicer->start();
 

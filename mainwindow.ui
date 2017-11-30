@@ -188,7 +188,7 @@
       </rect>
      </property>
      <property name="suffix">
-      <string> µm</string>
+      <string>µm</string>
      </property>
      <property name="prefix">
       <string/>
