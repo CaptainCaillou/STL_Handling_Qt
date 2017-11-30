@@ -11,14 +11,23 @@ GCodeGenerator::GCodeGenerator() {
 }
 
 void GCodeGenerator::run() {
-    printf("run !\n");
+    //printf("run !\n");
     int nbLayers = Part.getLayers().size();
+
+    if(nbLayers < 1) {
+        std::cerr << "Aucune couche à exporter !" << std::endl;
+        state = -2;
+        return;
+    }
 
     QFile sortie(this->fileUrl);
     if (!sortie.open(QIODevice::WriteOnly))
     {
       std::cerr << "Could not open file, Error: "<< errno << " : " << strerror(errno) << std::endl;
+      state = -2;
+      return;
     }
+
     QTextStream sortieStream(&sortie);
 
     for(int il = 0; il < nbLayers; il++) {
@@ -44,6 +53,7 @@ void GCodeGenerator::run() {
         }
     }
     sortie.close();
+    if (state != -2) state = -1;
 }
 
 int GCodeGenerator::getState() {

@@ -313,6 +313,7 @@ void fileReader::run()
   if (!input.open(QIODevice::ReadOnly))
   {
     std::cerr << "Could not open file, Error: "<< errno << " : " << strerror(errno) << std::endl;
+    this->state = -2;
   }
 
   QByteArray text = input.readAll();
@@ -329,7 +330,7 @@ void fileReader::run()
   } else {
     this->decodeFile(text);
   }
-  this->state = -1;
+  if (this->state != -2) this->state = -1;
 }
 
 int fileReader::getState()
