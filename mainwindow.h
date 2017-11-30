@@ -24,8 +24,6 @@ private slots:
 
     void on_boutonLireFichier_clicked();
 
-    void on_horizontalSlider_2_valueChanged(int value);
-
     void on_boutonSlicer_clicked();
 
     void updateFileReadingProgressBar();
@@ -34,23 +32,27 @@ private slots:
 
     void updateExportProgressBar();
 
-    void on_horizontalSlider_sliderMoved(int position);
 
-    void on_horizontalSlider_sliderReleased();
-
-    void on_horizontalSlider_valueChanged(int value);
-
-    void on_horizontalSlider_actionTriggered(int action);
-
-    void on_horizontalSlider_sliderPressed();
-
-    void on_horizontalSlider_rangeChanged(int min, int max);
 
     void on_boutonEcrireFichier_clicked();
 
     void on_boutonParcourir_2_clicked();
 
     void on_checkBox_clicked();
+
+    void on_x_minus_clicked();
+
+    void on_x_plus_clicked();
+
+    void on_y_plus_clicked();
+
+    void on_y_minus_clicked();
+
+    void on_z_plus_clicked();
+
+    void on_z_minus_clicked();
+
+    void on_checkBox_5_clicked();
 
 private:
     Ui::MainWindow *ui;

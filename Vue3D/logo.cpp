@@ -162,9 +162,9 @@ void Logo::loadPart(part Part)
 
   for(unsigned int i = 0; i < triangles.size(); i++)
   {
-    std::cout << "x   p1 :" << triangles[i].p1.to3dVector().x() <<" p2: " <<  triangles[i].p2.to3dVector().x() << " p3: " << triangles[i].p3.to3dVector().x() << std::endl;
-    std::cout << "y   p1 :" << triangles[i].p1.to3dVector().y() <<" p2: " <<  triangles[i].p2.to3dVector().y() << " p3: " << triangles[i].p3.to3dVector().y() << std::endl;
-    std::cout << "z   p1 :" << triangles[i].p1.to3dVector().z() <<" p2: " <<  triangles[i].p2.to3dVector().z() << " p3: " << triangles[i].p3.to3dVector().z() << std::endl;
+    //std::cout << "x   p1 :" << triangles[i].p1.to3dVector().x() <<" p2: " <<  triangles[i].p2.to3dVector().x() << " p3: " << triangles[i].p3.to3dVector().x() << std::endl;
+    //std::cout << "y   p1 :" << triangles[i].p1.to3dVector().y() <<" p2: " <<  triangles[i].p2.to3dVector().y() << " p3: " << triangles[i].p3.to3dVector().y() << std::endl;
+    //std::cout << "z   p1 :" << triangles[i].p1.to3dVector().z() <<" p2: " <<  triangles[i].p2.to3dVector().z() << " p3: " << triangles[i].p3.to3dVector().z() << std::endl;
     d_triangle(triangles[i].p1.to3dVector(),triangles[i].p2.to3dVector(),triangles[i].p3.to3dVector());
   }
   part1_end_index = vertexCount();

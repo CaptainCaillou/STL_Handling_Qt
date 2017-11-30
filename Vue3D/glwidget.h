@@ -77,6 +77,7 @@ public:
 
   void zoom(float  zoom);
   bool VisualizeEdge;
+  bool VisualizeGrid;
 
 public slots:
   void setXRotation(int angle);
@@ -97,6 +98,11 @@ protected:
   void mousePressEvent(QMouseEvent *event) override;
   void mouseMoveEvent(QMouseEvent *event) override;
   void wheelEvent(QWheelEvent *event);
+
+public:
+  int i; //TODO: delete
+  void releaseMProgram(void);
+  void loadLogo(part logo);
 
 private:
   void setupVertexAttribs();

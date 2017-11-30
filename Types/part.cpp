@@ -37,3 +37,20 @@ double part::getHeight()
 {
   return this->height;
 }
+
+
+void part::translate(float stepX, float stepY, float stepZ)
+{
+  for(unsigned int i = 0; i < this->triangles.size(); i++)
+  {
+      triangles[i].p1.x += stepX;
+      triangles[i].p1.y += stepY;
+      triangles[i].p1.z += stepZ;
+      triangles[i].p2.x += stepX;
+      triangles[i].p2.y += stepY;
+      triangles[i].p2.z += stepZ;
+      triangles[i].p3.x += stepX;
+      triangles[i].p3.y += stepY;
+      triangles[i].p3.z += stepZ;
+  }
+}

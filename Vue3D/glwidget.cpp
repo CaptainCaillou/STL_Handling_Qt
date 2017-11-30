@@ -65,7 +65,10 @@ GLWidget::GLWidget(QWidget *parent)
     m_xRot(0),
     m_yRot(0),
     m_zRot(0),
-    m_program(0)
+    m_program(0),
+    i(0),
+    VisualizeEdge(false),
+    VisualizeGrid(true)
 {
   m_core = QSurfaceFormat::defaultFormat().profile() == QSurfaceFormat::CoreProfile;
   // --transparent causes the clear color to be transparent. Therefore, on systems that
@@ -315,28 +318,32 @@ void GLWidget::paintGL()
   m_program->setUniformValue(colorLocation, color);
   m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
+  glLineWidth(0.1);
+  if(VisualizeGrid)
+  {
+    color = QColor(0,255,0,100);
+    m_program->setUniformValue(colorLocation, color);
+    glDrawArrays(GL_LINES, m_logo.grid_x_start_index, m_logo.grid_x_end_index - m_logo.grid_x_start_index);
 
-  color = QColor(0,255,0,100);
-  m_program->setUniformValue(colorLocation, color);
-  glDrawArrays(GL_LINES, m_logo.grid_x_start_index, m_logo.grid_x_end_index);
-
-  //The y grid
-  color = QColor(255,0,0,100);
-  m_program->setUniformValue(colorLocation, color);
-  glDrawArrays(GL_LINES, m_logo.grid_y_start_index, m_logo.grid_y_end_index);
+    //The y grid
+    color = QColor(255,0,0,100);
+    m_program->setUniformValue(colorLocation, color);
+    glDrawArrays(GL_LINES, m_logo.grid_y_start_index, m_logo.grid_y_end_index - m_logo.grid_y_start_index);
+  }
 
   if(VisualizeEdge)
   {
+    glLineWidth(3.0f);
     color = QColor(255,255,255,100);
     m_program->setUniformValue(colorLocation, color);
-    glDrawArrays(GL_LINES, m_logo.part1_start_index, m_logo.part1_end_index);
+    glDrawArrays(GL_LINES, m_logo.part1_start_index,  m_logo.part1_end_index - m_logo.part1_start_index); // m_logo.part1_end_index - m_logo.part1_start_index);
   }else{
     color = QColor(0,0,0,100);
     m_program->setUniformValue(colorLocation, color);
-    glDrawArrays(GL_LINES, m_logo.part1_start_index, m_logo.part1_end_index);
+    glDrawArrays(GL_LINES, m_logo.part1_start_index, m_logo.part1_end_index - m_logo.part1_start_index);
     color = QColor(255,255,255,255);
     m_program->setUniformValue(colorLocation, color);
-    glDrawArrays(GL_TRIANGLES, m_logo.part1_start_index, m_logo.part1_end_index);
+    glDrawArrays(GL_TRIANGLES, m_logo.part1_start_index, m_logo.part1_end_index - m_logo.part1_start_index);
   }
 
   m_program->release();
@@ -396,4 +403,14 @@ void GLWidget::zoom(float zoom)
   m_camera.translate(0,0,zoom);
   m_program->release();
   update();
+}
+
+void GLWidget::releaseMProgram(void)
+{
+  m_program->release();
+}
+
+void GLWidget::loadLogo(part logo)
+{
+  this->m_logo.loadPart(logo);
 }

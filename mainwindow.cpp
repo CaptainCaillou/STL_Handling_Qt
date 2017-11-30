@@ -59,10 +59,6 @@ void MainWindow::on_boutonLireFichier_clicked() {
   timer_fileReading->start(1);
 }
 
-void MainWindow::on_horizontalSlider_2_valueChanged(int value) {
-  MAJVue3D();
-}
-
 void MainWindow::MAJVue3D(void) {
   //ui->VueOpenGL->paintGL();
 
@@ -79,6 +75,7 @@ void MainWindow::updateFileReadingProgressBar() {
     delete FileReader;
     std::cout << "FileReading finished" << std::endl;
     timer_fileReading->stop();
+    ui->openGLWidget->loadPart(part_1);
   }
 }
 
@@ -96,25 +93,23 @@ void MainWindow::updateSliceProgressBar() {
     std::cout << "Slice finished" << std::endl;
     timer_slice->stop();
 
-
-    ui->openGLWidget->loadPart(part_1);
   }
 }
 
 
 void MainWindow::updateExportProgressBar() {
-    int state = exporteur->getState();
+  int state = exporteur->getState();
 
-    //printf("State : %d\n", state);
-    if (state != -1)
-      ui->progressBarExport->setValue(state);
+  //printf("State : %d\n", state);
+  if (state != -1)
+    ui->progressBarExport->setValue(state);
 
-    if (exporteur->isFinished()) {
-      ui->progressBarExport->setValue(100);
-      delete exporteur;
-      std::cout << "Export finished" << std::endl;
-      timer_export->stop();
-    }
+  if (exporteur->isFinished()) {
+    ui->progressBarExport->setValue(100);
+    delete exporteur;
+    std::cout << "Export finished" << std::endl;
+    timer_export->stop();
+  }
 }
 
 void MainWindow::on_boutonSlicer_clicked() {
@@ -129,55 +124,16 @@ void MainWindow::on_boutonSlicer_clicked() {
   timer_slice->start(10);
 }
 
-static float oldZoom = 0;
-void MainWindow::on_horizontalSlider_sliderMoved(int position)
-{
-  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
-  ui->openGLWidget->update();
-  oldZoom = position;
-}
 
-void MainWindow::on_horizontalSlider_sliderReleased()
-{
-  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
-  ui->openGLWidget->update();
-  oldZoom = ui->horizontalSlider->value();
-}
-
-void MainWindow::on_horizontalSlider_valueChanged(int value)
-{
-  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
-  ui->openGLWidget->update();
-  oldZoom = ui->horizontalSlider->value();
-}
-
-void MainWindow::on_horizontalSlider_actionTriggered(int action)
-{
-  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
-  ui->openGLWidget->update();
-  oldZoom = ui->horizontalSlider->value();
-}
-
-void MainWindow::on_horizontalSlider_sliderPressed()
-{
-  ui->openGLWidget->zoom((ui->horizontalSlider->value() - oldZoom)/10);
-  ui->openGLWidget->update();
-  oldZoom = ui->horizontalSlider->value();
-}
-
-void MainWindow::on_horizontalSlider_rangeChanged(int,int)
-{
-
-}
 
 void MainWindow::on_boutonEcrireFichier_clicked()
 {
-    if (ui->champFichierExport->text().isEmpty()) return;
-    exporteur = new GCodeGenerator();
-    exporteur->setPart(part_1);
-    exporteur->setFileUrl(ui->champFichierExport->text());
-    exporteur->start();
-    timer_export->start(10);
+  if (ui->champFichierExport->text().isEmpty()) return;
+  exporteur = new GCodeGenerator();
+  exporteur->setPart(part_1);
+  exporteur->setFileUrl(ui->champFichierExport->text());
+  exporteur->start();
+  timer_export->start(10);
 }
 
 void MainWindow::on_checkBox_clicked()
@@ -186,8 +142,64 @@ void MainWindow::on_checkBox_clicked()
   ui->openGLWidget->update();
 }
 
+void MainWindow::on_checkBox_5_clicked()
+{
+  this->ui->openGLWidget->VisualizeGrid = this->ui->checkBox_5->isChecked();
+  ui->openGLWidget->update();
+}
+
 void MainWindow::on_boutonParcourir_2_clicked()
 {
-    QString NomFichier = QFileDialog::getSaveFileName(this, tr("Sauvegarder le fichier de sortie"), "%USERPROFILE%/", tr("Fichier GCODE (*.gcode)"));
-    ui->champFichierExport->setText(NomFichier);
+  QString NomFichier = QFileDialog::getSaveFileName(this, tr("Sauvegarder le fichier de sortie"), "%USERPROFILE%/", tr("Fichier GCODE (*.gcode)"));
+  ui->champFichierExport->setText(NomFichier);
 }
+
+void MainWindow::on_x_minus_clicked()
+{
+  part_1.translate( - this->ui->move_step->text().toFloat(), 0, 0);
+  ui->openGLWidget->loadLogo(part_1);
+  ui->openGLWidget->releaseMProgram();
+  ui->openGLWidget->update();
+}
+
+void MainWindow::on_x_plus_clicked()
+{
+  part_1.translate(this->ui->move_step->text().toFloat(), 0, 0);
+  ui->openGLWidget->loadLogo(part_1);
+  ui->openGLWidget->releaseMProgram();
+  ui->openGLWidget->update();
+}
+
+void MainWindow::on_y_plus_clicked()
+{
+  part_1.translate(0, this->ui->move_step->text().toFloat(), 0);
+  ui->openGLWidget->loadLogo(part_1);
+  ui->openGLWidget->releaseMProgram();
+  ui->openGLWidget->update();
+}
+
+void MainWindow::on_y_minus_clicked()
+{
+  part_1.translate(0, - this->ui->move_step->text().toFloat(), 0);
+  ui->openGLWidget->loadLogo(part_1);
+  ui->openGLWidget->releaseMProgram();
+  ui->openGLWidget->update();
+}
+
+void MainWindow::on_z_plus_clicked()
+{
+  part_1.translate(0, 0, this->ui->move_step->text().toFloat());
+  ui->openGLWidget->loadLogo(part_1);
+  ui->openGLWidget->releaseMProgram();
+  ui->openGLWidget->update();
+}
+
+void MainWindow::on_z_minus_clicked()
+{
+  part_1.translate(0, 0, this->ui->move_step->text().toFloat());
+  ui->openGLWidget->loadLogo(part_1);
+  ui->openGLWidget->releaseMProgram();
+  ui->openGLWidget->update();
+}
+
+
