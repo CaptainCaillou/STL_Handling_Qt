@@ -76,7 +76,7 @@ public:
 private:
     void add(const QVector3D &v, const QVector3D &n);
 
-    void line(const QVector3D p1,
+    void d_line(const QVector3D p1,
               const QVector3D p2);
 
     void quad(GLfloat x1, GLfloat y1, GLfloat z1,
@@ -99,7 +99,8 @@ private:
     int m_count;
 
 public:
-    void loadPart(part Part);
+    void displayPart(part Part);
+    void diplayLayers(part Part);
 };
 
 #endif // LOGO_H

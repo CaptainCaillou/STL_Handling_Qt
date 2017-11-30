@@ -75,7 +75,7 @@ void MainWindow::updateFileReadingProgressBar() {
     delete FileReader;
     std::cout << "FileReading finished" << std::endl;
     timer_fileReading->stop();
-    ui->openGLWidget->loadPart(part_1);
+    ui->openGLWidget->displayPart(part_1);
   }
 }
 
@@ -92,7 +92,7 @@ void MainWindow::updateSliceProgressBar() {
     delete slicer;
     std::cout << "Slice finished" << std::endl;
     timer_slice->stop();
-
+    ui->openGLWidget->displayLayers(part_1);
   }
 }
 
@@ -116,7 +116,7 @@ void MainWindow::on_boutonSlicer_clicked() {
   //slicing part
   slicer = new Slicer;
   slicer->setPart(part_1);
-  slicer->setSlicerWidth(0.0002);
+  slicer->setSlicerWidth(0.2);
   //then slice the part
   slicer->start();
 

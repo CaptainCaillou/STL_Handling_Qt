@@ -84,7 +84,7 @@ public slots:
   void setYRotation(int angle);
   void setZRotation(int angle);
   void cleanup();
-  void loadPart(part Part);
+  void displayPart(part Part);
 
 signals:
   void xRotationChanged(int angle);
@@ -103,6 +103,7 @@ public:
   int i; //TODO: delete
   void releaseMProgram(void);
   void loadLogo(part logo);
+  void displayLayers(part logo);
 
 private:
   void setupVertexAttribs();

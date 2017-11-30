@@ -63,13 +63,13 @@ Logo::Logo()
   grid_x_start_index = vertexCount();
   for(int i = -10; i <= 10; i++)
   {
-    line(QVector3D(i,-10,0),QVector3D(i,10,0)); // the x lines
+    d_line(QVector3D(i,-10,0),QVector3D(i,10,0)); // the x lines
   }
   grid_x_end_index = vertexCount();
   grid_y_start_index = vertexCount();
   for(int i = -10; i <= 10; i++)
   {
-    line(QVector3D(-10,i,0),QVector3D(10,i,0)); // the x lines
+    d_line(QVector3D(-10,i,0),QVector3D(10,i,0)); // the x lines
   }
   grid_y_end_index = vertexCount();
 }
@@ -112,7 +112,7 @@ void Logo::quad(GLfloat x1, GLfloat y1, GLfloat z1,
   add(QVector3D(x4, y4, z4), n);
 }
 
-void Logo::line(const QVector3D p1, const QVector3D p2)
+void Logo::d_line(const QVector3D p1, const QVector3D p2)
 {
   QVector3D n = QVector3D::normal(p2-p1, p2-p1);
   add(p1,n);
@@ -155,7 +155,7 @@ void Logo::tetra(const QVector3D p1,
   d_triangle(p2, p3, p4);
 }
 
-void Logo::loadPart(part Part)
+void Logo::displayPart(part Part)
 {
   m_count = grid_y_end_index * 6;
   std::vector<triangle> triangles = Part.getTriangles();
@@ -168,4 +168,18 @@ void Logo::loadPart(part Part)
   }
   part1_end_index = vertexCount();
   std::cout << "Part from:" << part1_start_index << "to: " << part1_end_index << " Total of " << (part1_end_index - part1_start_index)/6 << " triangles." << std::endl;
+}
+
+void Logo::diplayLayers(part Part)
+{
+  m_count = grid_y_end_index * 6;
+  part1_start_index = vertexCount();
+  std::vector<layer> layers = Part.getLayers();
+
+  for(unsigned int i = 0; i < layers.size(); i ++) {
+    for(unsigned int j = 0; j < layers[i].contours.size(); j++) {
+      d_line(layers[i].contours[j].p1.to3dVector(), layers[i].contours[j].p2.to3dVector());
+    }
+  }
+  part1_end_index = vertexCount();
 }

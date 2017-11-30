@@ -355,12 +355,6 @@ void GLWidget::resizeGL(int w, int h)
   m_proj.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
 }
 
-void GLWidget::loadPart(part Part)
-{
-  m_logo.loadPart(Part);
-  m_program->release();
-  update();
-}
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
@@ -412,6 +406,19 @@ void GLWidget::releaseMProgram(void)
 
 void GLWidget::loadLogo(part logo)
 {
-  //initializeGL();
-  this->m_logo.loadPart(logo);
+  this->m_logo.displayPart(logo);
+}
+
+void GLWidget::displayPart(part Part)
+{
+  m_logo.displayPart(Part);
+  m_program->release();
+  update();
+}
+
+void GLWidget::displayLayers(part logo)
+{
+  m_logo.diplayLayers(logo);
+  m_program->release();
+  update();
 }
