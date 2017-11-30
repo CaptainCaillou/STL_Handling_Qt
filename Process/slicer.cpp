@@ -13,8 +13,8 @@ void Slicer::run()
   if(lay.width <= 0)
   {
     std::cerr << "Seriously, want to slice with layer height <= 0 ?!" << std::endl;
-    std::cerr << "The layer height has been set to 0.1mm" << std::endl;
-    lay.width = 0.1;
+    if(state != -2) this->state = -1;
+    return;
   }
 
   std::vector<layer> layers;
@@ -48,7 +48,7 @@ void Slicer::run()
   this->Part.setLayers(layers);
 
   //We are now on idle
-  this->state = -1;
+  if(state != -2) this->state = -1;
 }
 
 void Slicer::setPart(part Part)

@@ -54,6 +54,8 @@ private slots:
 
     void on_checkBox_5_clicked();
 
+    void on_spinBox_sliceHeight_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 

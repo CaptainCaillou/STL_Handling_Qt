@@ -41,6 +41,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::on_boutonParcourir_clicked() {
+  ui->boutonLireFichier->setText("Lire fichier");
   QString NomFichier = QFileDialog::getOpenFileName(this, tr("Ouvrir le fichier d'entrée"), "%USERPROFILE%/", tr("Fichier 3D (*.stl)"));
   ui->champFichier->setText(NomFichier);
 }
@@ -70,12 +71,18 @@ void MainWindow::updateFileReadingProgressBar() {
     ui->progressBarFile->setValue(state);
 
   if (FileReader->isFinished()) {
-    ui->progressBarFile->setValue(100);
-    part_1 = FileReader->getPart();
+    if (state == -2) {
+        ui->progressBarFile->setValue(0);
+        ui->boutonLireFichier->setText("Erreur !");
+    }
+    else {
+        ui->progressBarFile->setValue(100);
+        ui->openGLWidget->loadPart(part_1);
+        part_1 = FileReader->getPart();
+    }
     delete FileReader;
     std::cout << "FileReading finished" << std::endl;
     timer_fileReading->stop();
-    ui->openGLWidget->loadPart(part_1);
   }
 }
 
@@ -87,12 +94,19 @@ void MainWindow::updateSliceProgressBar() {
     ui->progressBarSlice->setValue(state);
 
   if (slicer->isFinished()) {
-    ui->progressBarSlice->setValue(100);
-    part_1 = slicer->getPart();
+    if (state == -2) {
+        ui->progressBarSlice->setValue(0);
+        ui->boutonSlicer->setText("Erreur !");
+        std::cout << "Slice process returned error" << std::endl;
+    }
+    else {
+        ui->progressBarSlice->setValue(100);
+        ui->openGLWidget->loadPart(part_1);
+        part_1 = slicer->getPart();
+        std::cout << "Slice finished" << std::endl;
+    }
     delete slicer;
-    std::cout << "Slice finished" << std::endl;
     timer_slice->stop();
-
   }
 }
 
@@ -105,18 +119,28 @@ void MainWindow::updateExportProgressBar() {
     ui->progressBarExport->setValue(state);
 
   if (exporteur->isFinished()) {
-    ui->progressBarExport->setValue(100);
+      if (state == -2) {
+          ui->progressBarExport->setValue(0);
+          ui->boutonEcrireFichier->setText("Erreur !");
+          std::cout << "Slice process returned error" << std::endl;
+      }
+      else {
+          ui->progressBarExport->setValue(100);
+          ui->openGLWidget->loadPart(part_1);
+          std::cout << "Export finished" << std::endl;
+      }
     delete exporteur;
-    std::cout << "Export finished" << std::endl;
     timer_export->stop();
   }
 }
 
 void MainWindow::on_boutonSlicer_clicked() {
   //slicing part
+  ui->boutonEcrireFichier->setText("Ecrire fichier");
+  ui->boutonSlicer->setText("Démarrer");
   slicer = new Slicer;
   slicer->setPart(part_1);
-  slicer->setSlicerWidth(0.0002);
+  slicer->setSlicerWidth(ui->spinBox_sliceHeight->value()/1000000.);
   //then slice the part
   slicer->start();
 
@@ -150,6 +174,7 @@ void MainWindow::on_checkBox_5_clicked()
 
 void MainWindow::on_boutonParcourir_2_clicked()
 {
+  ui->boutonEcrireFichier->setText("Ecrire fichier");
   QString NomFichier = QFileDialog::getSaveFileName(this, tr("Sauvegarder le fichier de sortie"), "%USERPROFILE%/", tr("Fichier GCODE (*.gcode)"));
   ui->champFichierExport->setText(NomFichier);
 }
@@ -196,10 +221,15 @@ void MainWindow::on_z_plus_clicked()
 
 void MainWindow::on_z_minus_clicked()
 {
-  part_1.translate(0, 0, this->ui->move_step->text().toFloat());
+  part_1.translate(0, 0, - this->ui->move_step->text().toFloat());
   ui->openGLWidget->loadLogo(part_1);
   ui->openGLWidget->releaseMProgram();
   ui->openGLWidget->update();
 }
 
 
+
+void MainWindow::on_spinBox_sliceHeight_valueChanged(int arg1)
+{
+    ui->boutonSlicer->setText("Démarrer");
+}
