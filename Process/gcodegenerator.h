@@ -14,7 +14,7 @@ class GCodeGenerator : public process
 private:
   QString fileUrl;
   FILE* file;
-  std::vector<toolPath> paths;
+ // std::vector<toolPath> paths;
 
 public:
   GCodeGenerator();

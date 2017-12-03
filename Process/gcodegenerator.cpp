@@ -41,7 +41,7 @@ void GCodeGenerator::run() {
             path.y1 = seg.p1.y;
             path.x2 = seg.p2.x;
             path.y2 = seg.p2.y;;
-            paths.push_back(path);
+            //paths.push_back(path);
 
             //std::cout << "z1 :" << path.z1 << " z2 :" << path.z2 << " x1 :" << path.x1 << " x2 :" << path.x2 << "\n";
             //fflush(stdout);
