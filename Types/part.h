@@ -22,7 +22,7 @@ public:
   layer getLayer(int i);
 
   //translation
-  void translate(float stepX, float stepY, float stepZ);
+  void shift(float stepX, float stepY, float stepZ);
 };
 
 #endif // PART_H

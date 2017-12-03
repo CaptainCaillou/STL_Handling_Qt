@@ -39,7 +39,7 @@ double part::getHeight()
 }
 
 
-void part::translate(float stepX, float stepY, float stepZ)
+void part::shift(float stepX, float stepY, float stepZ)
 {
   for(unsigned int i = 0; i < this->triangles.size(); i++)
   {

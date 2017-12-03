@@ -184,7 +184,7 @@ void MainWindow::on_boutonParcourir_2_clicked()
 
 void MainWindow::on_x_minus_clicked()
 {
-  part_1.translate( - this->ui->move_step->text().toFloat(), 0, 0);
+  part_1.shift( - this->ui->move_step->text().toFloat(), 0, 0);
   ui->openGLWidget->loadLogo(part_1);
   ui->openGLWidget->releaseMProgram();
   ui->openGLWidget->update();
@@ -192,7 +192,7 @@ void MainWindow::on_x_minus_clicked()
 
 void MainWindow::on_x_plus_clicked()
 {
-  part_1.translate(this->ui->move_step->text().toFloat(), 0, 0);
+  part_1.shift(this->ui->move_step->text().toFloat(), 0, 0);
   ui->openGLWidget->loadLogo(part_1);
   ui->openGLWidget->releaseMProgram();
   ui->openGLWidget->update();
@@ -200,7 +200,7 @@ void MainWindow::on_x_plus_clicked()
 
 void MainWindow::on_y_plus_clicked()
 {
-  part_1.translate(0, this->ui->move_step->text().toFloat(), 0);
+  part_1.shift(0, this->ui->move_step->text().toFloat(), 0);
   ui->openGLWidget->loadLogo(part_1);
   ui->openGLWidget->releaseMProgram();
   ui->openGLWidget->update();
@@ -208,7 +208,7 @@ void MainWindow::on_y_plus_clicked()
 
 void MainWindow::on_y_minus_clicked()
 {
-  part_1.translate(0, - this->ui->move_step->text().toFloat(), 0);
+  part_1.shift(0, - this->ui->move_step->text().toFloat(), 0);
   ui->openGLWidget->loadLogo(part_1);
   ui->openGLWidget->releaseMProgram();
   ui->openGLWidget->update();
@@ -216,7 +216,7 @@ void MainWindow::on_y_minus_clicked()
 
 void MainWindow::on_z_plus_clicked()
 {
-  part_1.translate(0, 0, this->ui->move_step->text().toFloat());
+  part_1.shift(0, 0, this->ui->move_step->text().toFloat());
   ui->openGLWidget->loadLogo(part_1);
   ui->openGLWidget->releaseMProgram();
   ui->openGLWidget->update();
@@ -224,7 +224,7 @@ void MainWindow::on_z_plus_clicked()
 
 void MainWindow::on_z_minus_clicked()
 {
-  part_1.translate(0, 0, - this->ui->move_step->text().toFloat());
+  part_1.shift(0, 0, - this->ui->move_step->text().toFloat());
   ui->openGLWidget->loadLogo(part_1);
   ui->openGLWidget->releaseMProgram();
   ui->openGLWidget->update();
