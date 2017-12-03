@@ -4,6 +4,7 @@
 #include <QThread>
 #include <QTimer>
 #include <iostream>
+#include "Types/part.h"
 
 class process : public QThread
 {
@@ -11,8 +12,14 @@ class process : public QThread
 private:
   bool isRunning;
 protected:
+  part Part;
   int state;
   virtual void run();
+public:
+  int getState();
+  void setPart(part Part);
+  part getPart(void);
+
 };
 
 #endif // PROCESS_H

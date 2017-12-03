@@ -80,7 +80,6 @@ void MainWindow::updateFileReadingProgressBar() {
         part_1 = FileReader->getPart();
         ui->openGLWidget->loadLogo(part_1);
         ui->openGLWidget->displayPart(part_1);
-        part_1 = FileReader->getPart();
     }
     delete FileReader;
     std::cout << "FileReading finished" << std::endl;

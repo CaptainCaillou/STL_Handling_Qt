@@ -1,6 +1,18 @@
 #include "process.h"
 
-void process::run()
+void process::run(){}
+
+int process::getState()
 {
-  std::cout << std::endl;
+  return this->state;
+}
+
+void process::setPart(part Part)
+{
+  this->Part = Part;
+}
+
+part process::getPart(void)
+{
+  return this->Part;
 }

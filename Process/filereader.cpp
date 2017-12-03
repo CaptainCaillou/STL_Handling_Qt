@@ -12,16 +12,6 @@ fileReader::fileReader()
   this->state = -1; //idle
 }
 
-void fileReader::setPart(part Part)
-{
-  this->Part = Part;
-}
-
-part fileReader::getPart(void)
-{
-  return this->Part;
-}
-
 void fileReader::setFileUrl(QString fileUrl)
 {
   this->fileUrl = fileUrl;
@@ -129,10 +119,6 @@ std::vector<triangle> fileReader::decodeFile(QString text){
     }
   }
   Part.setHeight(highest_point);
-
-  //std::cout << "Nb of triangles: "  << cpt << std::endl;
-  //std::cout << "Highest_point: "    << highest_point << std::endl;
-
   Part.setTriangles(triangles);
   return triangles;
 }
@@ -152,81 +138,6 @@ QString toDebug(const QByteArray & line) {
   }
   return s;
 }
-/*
-std::vector<triangle> fileReader::decodeBinarySTL(QByteArray text) {
-
-  std::cout << "length of the byte array : " << text.length() << std::endl;
-  std::vector<triangle> triangles;
-
-  //char bufferHeader[81] = {0};
-  QByteArray BufferHeader;
-  uint Ntriangles;
-
-  std::cout << std::endl;
-  BufferHeader = text.left(80);
-  text.remove(0,80);
-  Ntriangles = toDebug(text.left(1)).toUInt();
-  text.remove(0,1);
-
-  printf("STL Header : `%s`\nModel is supposed to have %d triangles\n", BufferHeader.toStdString().c_str(), Ntriangles);
-
-
-  //      D:/Code/STL_Handler/TestFiles/cube10bin.STL
-
-  //return triangles;
-  //triangleChunk tempTriangle;
-  for(unsigned int i = 0; i < Ntriangles; i++) {
-    std::cout << "Triangle n " << triangles.size() << std::endl;
-    triangle tmp;
-
-    // 3 first floats are Normal vector coordinates. We ignore them.
-    text.remove(0,3);
-
-    // Vertex 1 x
-    tmp.p1.x = toDebug(text.left(1)).toFloat();
-    text.remove(0,1);
-
-    // Vertex 1 y
-    tmp.p1.y = toDebug(text.left(1)).toFloat();
-    text.remove(0,1);
-    // Vertex 1 z
-    tmp.p1.z = toDebug(text.left(1)).toFloat();
-    text.remove(0,1);
-
-    // Vertex 2 x
-    tmp.p2.x = toDebug(text.left(1)).toFloat();
-    text.remove(0,1);
-
-    // Vertex 2 y
-    tmp.p2.y = toDebug(text.left(1)).toFloat();
-    text.remove(0,1);
-
-    // Vertex 2 z
-    tmp.p2.z = toDebug(text.left(1)).toFloat();
-    text.remove(0,1);
-
-    // Vertex 3 x
-    tmp.p3.x = toDebug(text.left(4)).toFloat();
-    text.remove(0,4);
-
-    // Vertex 3 y
-    tmp.p3.y = toDebug(text.left(4)).toFloat();
-    text.remove(0,4);
-
-    // Vertex 3 z
-    tmp.p3.z = toDebug(text.left(4)).toFloat();
-    text.remove(0,4);
-
-    std::cout << tmp.p1<< tmp.p2 << tmp.p3 << std::endl;
-    std::cout << text.length() << std::endl;
-
-    text.remove(0,2);
-    triangles.push_back(tmp);
-  }
-  Part.setTriangles(triangles);
-  return triangles;
-}
-*/
 
 std::vector<triangle> fileReader::decodeBinarySTL(QString fileURL){
 
@@ -331,9 +242,4 @@ void fileReader::run()
     this->decodeFile(text);
   }
   if (this->state != -2) this->state = -1;
-}
-
-int fileReader::getState()
-{
-  return this->state;
 }

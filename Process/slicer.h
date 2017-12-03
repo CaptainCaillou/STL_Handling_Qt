@@ -11,16 +11,11 @@ public:
   Slicer();
 
 private:
-  //int state;
-  part Part;
   double slicerWidth;
 
 public:
   void run() override;
-  void setPart(part Part);
-  part getPart(void);
   void setSlicerWidth(double width);
-  int  getState(void);
 };
 
 #endif // SLICER_H

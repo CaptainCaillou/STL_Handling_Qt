@@ -96,7 +96,7 @@ private:
     void extrude(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);
 
     QVector<GLfloat> m_data;
-    int m_count;
+    unsigned long int m_count;
 
 public:
     void displayPart(part Part);

@@ -11,25 +11,19 @@
 
 class GCodeGenerator : public process
 {
+private:
+  QString fileUrl;
+  FILE* file;
+  std::vector<toolPath> paths;
 
 public:
   GCodeGenerator();
   void run() override;
-  int  getState(void);
-
-public:
-  void setPart(part Part);
   void setFileUrl(QString fileUrl);
 
 private:
-  void optimize();
+  void optimize(); //TODO: Implement this function
 
-  QString fileUrl;
-  part Part;
-  FILE* file;
-  //std::vector<segment> layers;
-  std::vector<toolPath> trajets;
-  int state;
 };
 
 #endif // GCODEGENERATOR_H
