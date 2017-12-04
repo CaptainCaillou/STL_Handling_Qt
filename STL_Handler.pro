@@ -17,7 +17,6 @@ SOURCES += \
     Types/point.cpp \
     Vue3D/glwidget.cpp \
     Vue3D/logo.cpp \
-    Vue3D/part3d.cpp \
     Types/toolpath.cpp
 
 HEADERS += \
@@ -32,8 +31,7 @@ HEADERS += \
     Types/part.h \
     mainwindow.h \
     Vue3D/glwidget.h\
-    Vue3D/logo.h \
-    Vue3D/part3d.h
+    Vue3D/logo.h
 
 FORMS += \
     mainwindowbak.ui \
