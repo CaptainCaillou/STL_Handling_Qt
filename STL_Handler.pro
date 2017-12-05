@@ -34,7 +34,6 @@ HEADERS += \
     Vue3D/logo.h
 
 FORMS += \
-    mainwindowbak.ui \
     mainwindow.ui
 
 LIBS += -lOpengl32
